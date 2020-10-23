@@ -1,0 +1,110 @@
+:root {
+  --hex-width: 0px;
+  --hex-height: 0px;
+  --columns: 0;
+  --rows: 0;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Merriweather Sans', serif;
+}
+
+body {
+  background: linear-gradient(to right, #373b42, #61656d);
+}
+
+#toolbar {
+  padding: 10px;
+  margin: 10px;
+  border: 10px solid #ffcc7e;
+  border-radius: 20px;
+  opacity: 80%;
+}
+
+a {
+  display: inline-block;
+  padding: 12px 36px;
+  margin: 10px 10px;
+  color: #000000;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #80e27e, #4caf50);
+}
+
+a:hover {
+  color: #ffffff;
+  background: linear-gradient(90deg, #ff9b4f, #c76c21);
+  box-shadow: 0 0 10px #ff9b4f, 0 0 10px #ff9b4f, 0 0 10px #ff9b4f, 0 0 10px #ff9b4f;
+}
+
+span {
+  position: relative;
+  background: #ffffff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  animation: animate 1s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+
+#grid {
+  position: absolute;
+  width: 98%;
+  height: 70%;
+  bottom: 0;
+  border: 10px solid #ffcc7e;
+}
+
+polygon {
+  opacity: 20%;
+}
+
+polygon.qodd.rodd.status-empty {
+  fill: green;
+  opacity: 20%;
+}
+
+polygon.qeven.reven.status-empty {
+  fill: yellow;
+  opacity: 20%;
+}
+
+polygon.qeven.rodd.status-empty {
+  fill: blue;
+  opacity: 20%;
+}
+
+polygon.qodd.reven.status-empty {
+  fill: red;
+  opacity: 20%;
+}
+
+polygon:hover {
+  opacity: 100%;
+}
+
+polygon.status-wall {
+  fill: white;
+  opacity: 100%;
+}
+
+polygon.status-wall:hover {
+  fill: red;
+  opacity: 50%;
+}
