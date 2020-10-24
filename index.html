@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-  <meta charset="UTF-8">
+  <meta charset='UTF-8'>
   <title>Maze Creator</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather+Sans">
-  <link rel="stylesheet" href="src/styles.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather+Sans'>
+  <link rel='stylesheet' href='src/styles.css'>
 </head>
-<body>
-  <div id="toolbar">
-    <a href='#' onclick='handleReset()'>Reset</a>
+<body oncontextmenu='return false'>
+  <header id='toolbar'>
+    <script src='src/buttons.js'></script>
+    <button onclick='handleReset()'>Reset</button>
+    <button onclick='handleDraw()'>Draw</button>
+    <button onclick='handleErase()'>Erase</button>
+    <button onclick='handleVisualize()'>Visualize</button>
+  </header>
+  <div id='gridContainer'>
+    <svg id='grid' class='drawing'></svg>
   </div>
-  <svg id="grid"></svg>
 </body>
-<script src="src/Hex.js"></script>
-<script src="src/script.js"></script>
-<script src="src/buttons.js"></script>
+<script src='src/Hex.js'></script>
+<script src='src/functions.js'></script>
+<script src='src/script.js'></script>
 </html>

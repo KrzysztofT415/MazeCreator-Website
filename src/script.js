@@ -1,113 +1,86 @@
-window.onload = function() {
-  createButtons()
+window.onload = () => {
   generateGrid()
 }
 
-function createButtons() {
-  let toolbar = document.getElementById('toolbar');
+let generateGrid = () => {
+    let grid = document.getElementById('grid');
+    let width = 40
+    let height = 40
 
-  let buttonNames = ['start','stop','reset'];
+    let hexes = [...Array(width).keys()].map(
+        x => x = [...Array(height).keys()].map(
+            function (y) {
+                y -= Math.floor(x / 2)
+                let cell = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
+                let hex = new Hex(x, y, 50, cell)
+                cell.setAttribute('points', hex.corners.reduce((acc, v) => acc + ' ' + v.toString()))
+                cell.classList.add('type-hex', 'q-' + x, 'r-' + y, 'q-' + (x % 2 !== 0 ? 'odd' : 'even'), 'r-' + (y % 2 !== 0 ? 'odd' : 'even'), 'status-empty')
+                cell.style.transform = 'translate(0px, 0px) scale(1)'
+                grid.appendChild(cell)
+                return hex;
+            }
+        )
+    )
+    let downListener = (e) => {
+        switch (e.button) {
+            case 0:
+                grid.removeEventListener('mousedown', downListener)
+                grid.addEventListener('mousemove', draw)
+                grid.addEventListener('mouseup', drawUp)
+                break
+            case 2:
+                grid.removeEventListener('mousedown', downListener)
+                grid.addEventListener('mousemove', moveGrid)
+                grid.addEventListener('mouseup', moveUp)
+                break
+        }
+    }
 
-  buttonNames.forEach(name => {
-    let button = document.createElement('a');
-    button.href = '#';
-    button.innerText = name;
+    let moveGrid = (e) => {
+        let items = document.getElementsByClassName('type-hex')
+        let values = items[0].style.transform.replace(/[^\d\s.-]/g, '').split(' ').map(v => +v)
+        values[0] += e.movementX
+        values[1] += e.movementY
+        for (let i = 0; i < items.length; ++i) {
+            items[i].style.transform = `translate(${+values[0]}px, ${+values[1]}px) scale(${values[2]})`
+        }
+    }
 
-    toolbar.appendChild(button);
+    let draw = () => {
+        let cell = document.querySelectorAll("polygon:hover")
+        cell = cell[cell.length - 1]
 
-    button.addEventListener('click', function(e) {
-      let x = e.clientX - e.target.offsetLeft;
-      let y = e.clientY - e.target.offsetTop;
+        if (cell !== undefined) {
+            switch (document.getElementById('grid').classList[0]) {
+                case 'drawing':
+                    cell.classList.replace('status-empty', 'status-wall')
+                    break;
+                case 'erasing':
+                    cell.classList.replace('status-wall', 'status-empty')
+                    break;
+            }
+        }
+    }
+    let drawUp = () => {
+        grid.addEventListener('mousedown', downListener)
+        grid.removeEventListener('mousemove', draw)
+        grid.removeEventListener('mouseup', drawUp)
+    }
+    let moveUp = () => {
+        grid.addEventListener('mousedown', downListener)
+        grid.removeEventListener('mousemove', moveGrid)
+        grid.removeEventListener('mouseup', moveUp)
+    }
+    grid.addEventListener('mousedown', downListener)
+    let handleWheel = function (e) {
+        let items = document.getElementsByClassName('type-hex')
+        let values = items[0].style.transform.replace(/[^\d\s.-]/g, '').split(' ')
+        values[2] = Math.min(Math.max(.2, +values[2] + e.deltaY * -0.0004), 1);
+        for (let i = 0; i < items.length; ++i) {
+            items[i].style.transform = `translate(${+values[0]}px, ${+values[1]}px) scale(${values[2]})`
+        }
+    }
 
-      console.log(x,y)
+    grid.addEventListener('wheel', handleWheel)
 
-      let animation = document.createElement('span');
-      animation.style.left = x + 'px';
-      animation.style.top = y + 'px';
-      button.appendChild(animation);
-
-      setTimeout(() => {
-        animation.remove()
-      }, 1000);
-    });
-  });
 }
-
-function generateGrid() {
-  let grid = document.getElementById('grid');
-  let width = 42
-  let height = 15
-
-  let hexes = [...Array(width).keys()].map(
-      x => x = [...Array(height).keys()].map(
-          function (y) {
-            y -= Math.floor(x / 2)
-            let cell = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-            let hex = new Hex(x, y, cell)
-            cell.setAttribute('points', hex.corners.reduce((acc, v) => acc + ' ' + v.toString()))
-            cell.classList.add('q' + x, 'r' + y, 'q' + (x % 2 !== 0 ? 'odd' : 'even'), 'r' + (y % 2 !== 0 ? 'odd' : 'even'), 'status-empty')
-            grid.appendChild(cell)
-            return hex;
-          }
-      )
-  )
-  grid.addEventListener('mousedown', function () {
-    grid.addEventListener('mousemove', handleDrag)
-    grid.addEventListener('mouseup', e => handleUp(grid))
-  })
-}
-
-let handleDrag = function () {
-  let cell = document.querySelectorAll("polygon:hover")
-  cell = cell[cell.length - 1]
-
-  if (cell !== undefined && cell.classList.contains('status-empty')) {
-    cell.animate([
-      {
-        transform: 'translate(10px, 10px)',
-        fill: 'white',
-        opacity: '0%'
-      },
-      {
-        transform: 'translate(0, 0)',
-        fill: 'white',
-        opacity: '100%'
-      }], {
-      duration: 200,
-      iterations: 1
-    });
-    cell.classList.remove('status-empty')
-    cell.classList.add('status-wall')
-  }
-}
-
-function handleUp(grid) {
-  grid.removeEventListener('mousemove', handleDrag)
-  grid.removeEventListener('mouseup', this)
-}
-
-// let height = Math.floor(grid.clientHeight / 25) + 1;
-// let width = Math.floor(grid.clientWidth / 25);
-// console.log(height, width);
-//
-// for (let i = 0; i < width; ++i) {
-//   let newRow = document.createElement("div");
-//   newRow.classList.add("row");
-//   for (let i = 0; i < height; i++) {
-//     let newHex = document.createElement("div");
-//     newHex.classList.add("hexagon");
-//     newHex.classList.add("yellow");
-//     newRow.appendChild(newHex);
-//   }
-//   grid.append(newRow);
-// }
-//
-// grid.ondragstart = function() {
-//   console.log("hej");
-//   for (let i = 0; i < grid.children.length; ++i) {
-//     grid.children[i].ondragenter = function() {
-//       grid.children[i].classList.remove("yellow");
-//       grid.children[i].classList.add("red");
-//     };
-//   }
-// };
