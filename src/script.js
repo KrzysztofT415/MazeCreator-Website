@@ -1,42 +1,39 @@
 window.onload = () => {
-  generateGrid()
+    document.getElementById('grid').classList.add((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'notMobile'));
+
+    let board = new Board()
+    generateGrid()
 }
 
 let generateGrid = () => {
     let grid = document.getElementById('grid');
-    let width = 40
-    let height = 40
+    let width = 10
+    let height = 10
 
     let hexes = [...Array(width).keys()].map(
         x => x = [...Array(height).keys()].map(
-            function (y) {
-                y -= Math.floor(x / 2)
-                let cell = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-                let hex = new Hex(x, y, 50, cell)
-                cell.setAttribute('points', hex.corners.reduce((acc, v) => acc + ' ' + v.toString()))
-                cell.classList.add('type-hex', 'q-' + x, 'r-' + y, 'q-' + (x % 2 !== 0 ? 'odd' : 'even'), 'r-' + (y % 2 !== 0 ? 'odd' : 'even'), 'status-empty')
-                cell.style.transform = 'translate(0px, 0px) scale(1)'
-                grid.appendChild(cell)
-                return hex;
-            }
+            y => new Hex(x, y - Math.floor(x / 2))
         )
     )
-    let downListener = (e) => {
+
+    let downListener = e => {
         switch (e.button) {
             case 0:
-                grid.removeEventListener('mousedown', downListener)
-                grid.addEventListener('mousemove', draw)
-                grid.addEventListener('mouseup', drawUp)
+                draw()
+                grid.removeEventListener('pointerdown', downListener)
+                grid.addEventListener('pointermove', draw)
+                grid.addEventListener('pointerup', drawUp)
                 break
             case 2:
-                grid.removeEventListener('mousedown', downListener)
-                grid.addEventListener('mousemove', moveGrid)
-                grid.addEventListener('mouseup', moveUp)
+                moveGrid()
+                grid.removeEventListener('pointerdown', downListener)
+                grid.addEventListener('pointermove', moveGrid)
+                grid.addEventListener('pointerup', moveUp)
                 break
         }
     }
 
-    let moveGrid = (e) => {
+    let moveGrid = e => {
         let items = document.getElementsByClassName('type-hex')
         let values = items[0].style.transform.replace(/[^\d\s.-]/g, '').split(' ').map(v => +v)
         values[0] += e.movementX
@@ -62,17 +59,17 @@ let generateGrid = () => {
         }
     }
     let drawUp = () => {
-        grid.addEventListener('mousedown', downListener)
-        grid.removeEventListener('mousemove', draw)
-        grid.removeEventListener('mouseup', drawUp)
+        grid.addEventListener('pointerdown', downListener)
+        grid.removeEventListener('pointermove', draw)
+        grid.removeEventListener('pointerup', drawUp)
     }
     let moveUp = () => {
-        grid.addEventListener('mousedown', downListener)
-        grid.removeEventListener('mousemove', moveGrid)
-        grid.removeEventListener('mouseup', moveUp)
+        grid.addEventListener('pointerdown', downListener)
+        grid.removeEventListener('pointermove', moveGrid)
+        grid.removeEventListener('pointerup', moveUp)
     }
-    grid.addEventListener('mousedown', downListener)
-    let handleWheel = function (e) {
+    grid.addEventListener('pointerdown', downListener)
+    let handleWheel = e => {
         let items = document.getElementsByClassName('type-hex')
         let values = items[0].style.transform.replace(/[^\d\s.-]/g, '').split(' ')
         values[2] = Math.min(Math.max(.2, +values[2] + e.deltaY * -0.0004), 1);

@@ -1,3 +1,3 @@
-function getRandomInt(min, max) {
+let getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
 }

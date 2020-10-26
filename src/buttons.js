@@ -1,3 +1,11 @@
+const toggleButton = document.getElementById('burger')
+const navbarLinks = document.getElementById('navbar-links')
+
+toggleButton.addEventListener('click', () => {
+    navbarLinks.classList.toggle('active')
+    toggleButton.classList.toggle('open')
+})
+
 let handleReset = () => {
     let cells = document.getElementsByClassName('type-hex')
     for (let i = 0; i < cells.length; i++) {
@@ -27,6 +35,8 @@ let handleVisualize = () => {
             unvisited = [...unvisited, cells[i]]
         }
     }
+
+    if (unvisited.length === 0) return
 
     let number = 0
 

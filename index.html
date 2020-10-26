@@ -7,19 +7,31 @@
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather+Sans'>
   <link rel='stylesheet' href='src/styles.css'>
 </head>
+
 <body oncontextmenu='return false'>
   <header id='toolbar'>
-    <script src='src/buttons.js'></script>
-    <button onclick='handleReset()'>Reset</button>
-    <button onclick='handleDraw()'>Draw</button>
-    <button onclick='handleErase()'>Erase</button>
-    <button onclick='handleVisualize()'>Visualize</button>
+    <nav id="navbar">
+      <div id="title">Maze Creator</div>
+      <div id='burger'>
+        <a href="#" class="toggle-button"></a>
+      </div>
+      <div id="navbar-links">
+        <ul>
+          <script src='src/buttons.js'></script>
+          <li><a href="#" onclick='handleReset()'>Reset</a></li>
+          <li><a href="#" onclick='handleDraw()'>Draw</a></li>
+          <li><a href="#" onclick='handleErase()'>Erase</a></li>
+          <li><a href="#" onclick='handleVisualize()'>Visualize</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
-  <div id='gridContainer'>
-    <svg id='grid' class='drawing'></svg>
-  </div>
+
+  <svg id='grid' class='drawing'></svg>
 </body>
+
 <script src='src/Hex.js'></script>
+<script src='src/Board.js'></script>
 <script src='src/functions.js'></script>
 <script src='src/script.js'></script>
 </html>

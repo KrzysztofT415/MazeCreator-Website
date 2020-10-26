@@ -1,14 +1,14 @@
 class Hex {
-    #cell
     #position
+    #object
     #center
     #corners
     #edges
 
-    constructor(x, y, a, cell) {
+    constructor(x, y) {
         this.#position = [x, y]
-        this.#cell = cell
 
+        let a = 50
         this.#center = [x * a * 1.5, (y + x / 2.0) * a * Math.sqrt(3)]
 
         this.#corners = [...Array(6).keys()].map(
@@ -16,7 +16,14 @@ class Hex {
 
         this.#edges = [...Array(6).keys()].map(
             v => [this.#corners[v], this.#corners[(v + 1) % 6]])
+
+        this.#object = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
+        this.#object.setAttribute('points', this.#corners.reduce((acc, v) => acc + ' ' + v.toString()))
+        this.#object.id = x + '-' + y
+        this.#object.classList.add('type-hex', 'q-' + x, 'r-' + y, 'q-' + (x % 2 !== 0 ? 'odd' : 'even'), 'r-' + (y % 2 !== 0 ? 'odd' : 'even'), 'status-empty')
+
+        document.getElementById('grid').appendChild(this.#object)
     }
 
-    get corners() {return this.#corners}
+    set setState(newState) { this.#object.classList.replace(``,`status-${newState}`) }
 }
