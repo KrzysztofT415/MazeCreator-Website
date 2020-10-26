@@ -17,14 +17,14 @@ let handleReset = () => {
 let toggle = (mode) => {
     switch (mode) {
         case 'erase':
-            document.getElementById('erase').classList.toggle('chosen')
-            document.getElementById('draw').classList.toggle('chosen')
-            document.getElementById('grid').classList.toggle('drawing')
+            document.getElementById('erase').classList.add('chosen')
+            document.getElementById('draw').classList.remove('chosen')
+            document.getElementById('grid').classList.remove('drawing')
             break;
         case 'draw':
-            document.getElementById('erase').classList.toggle('chosen')
-            document.getElementById('draw').classList.toggle('chosen')
-            document.getElementById('grid').classList.toggle('drawing')
+            document.getElementById('erase').classList.remove('chosen')
+            document.getElementById('draw').classList.add('chosen')
+            document.getElementById('grid').classList.add('drawing')
             break;
     }
 }

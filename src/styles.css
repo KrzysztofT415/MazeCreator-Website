@@ -2,6 +2,27 @@
   --current-translateX: 0;
   --current-translateY: 0;
   --current-scale: 1;
+
+  --board-type: 'hex';
+  --generating-algorithm: 'recursiveBacktracking';
+  --solving-algorithm: 'astar';
+
+  --primaryL: #ffc947;
+  --primaryM: #ff9800;
+  --primaryD: #c66900;
+  --secondaryL: #ffff72;
+  --secondaryM: #ffeb3b;
+  --secondaryD: #c8b900;
+  --darkL: #373b42;
+  --darkM: #373b42;
+  --darkD: #11151b;
+  --white: #eceff1;
+  --whiteD: #babdbe;
+}
+
+::selection {
+  color: #11151b;
+  background: #ffeb3b80;
 }
 
 * {
