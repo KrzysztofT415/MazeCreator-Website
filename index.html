@@ -9,29 +9,30 @@
 </head>
 
 <body oncontextmenu='return false'>
-  <header id='toolbar'>
+  <div id='toolbar'>
     <nav id="navbar">
       <div id="title">Maze Creator</div>
       <div id='burger'>
-        <a href="#" class="toggle-button"></a>
+        <a draggable='false' href="#" class="toggle-button"></a>
       </div>
       <div id="navbar-links">
         <ul>
           <script src='src/buttons.js'></script>
-          <li><a href="#" onclick='handleReset()'>Reset</a></li>
-          <li><a href="#" onclick='handleDraw()'>Draw</a></li>
-          <li><a href="#" onclick='handleErase()'>Erase</a></li>
-          <li><a href="#" onclick='handleVisualize()'>Visualize</a></li>
+          <li><a draggable='false' href="#" onclick='handleReset()' id='reset'>Reset</a></li>
+          <li><a draggable='false' href="#" onclick='toggle("draw")' id='draw' class='chosen'>Draw</a></li>
+          <li><a draggable='false' href="#" onclick='toggle("erase")' id='erase'>Erase</a></li>
+          <li><a draggable='false' href="#" onclick='handleVisualize()' id='visualize'>Visualize</a></li>
         </ul>
       </div>
     </nav>
-  </header>
+  </div>
 
-  <svg id='grid' class='drawing'></svg>
+  <svg id='grid' class='drawing'>
+    <polygon id='hex-pointer' style='fill: red; opacity: 50%' points='38,0 19.000000000000004,32.90896534380867 -18.999999999999993,32.908965343808674 -38,4.653657836759942e-15 -19.000000000000018,-32.90896534380866 19.000000000000004,-32.90896534380867'></polygon>
+  </svg>
 </body>
-
+<script src='src/functions.js'></script>
 <script src='src/Hex.js'></script>
 <script src='src/Board.js'></script>
-<script src='src/functions.js'></script>
 <script src='src/script.js'></script>
 </html>

@@ -7,19 +7,26 @@ toggleButton.addEventListener('click', () => {
 })
 
 let handleReset = () => {
-    let cells = document.getElementsByClassName('type-hex')
-    for (let i = 0; i < cells.length; i++) {
-        cells.item(i).classList.replace('status-wall', 'status-empty')
-        cells.item(i).classList.replace('status-hidden', 'status-empty')
+    while (document.getElementsByClassName('type-hex').length > 0) {
+        for (let i = 0; i < document.getElementsByClassName('type-hex').length; ++i) {
+            document.getElementById('grid').removeChild(document.getElementsByTagName('polygon').item(i))
+        }
     }
 }
 
-let handleDraw = () => {
-    document.getElementById('grid').classList.replace('erasing', 'drawing')
-}
-
-let handleErase = () => {
-    document.getElementById('grid').classList.replace('drawing', 'erasing')
+let toggle = (mode) => {
+    switch (mode) {
+        case 'erase':
+            document.getElementById('erase').classList.toggle('chosen')
+            document.getElementById('draw').classList.toggle('chosen')
+            document.getElementById('grid').classList.toggle('drawing')
+            break;
+        case 'draw':
+            document.getElementById('erase').classList.toggle('chosen')
+            document.getElementById('draw').classList.toggle('chosen')
+            document.getElementById('grid').classList.toggle('drawing')
+            break;
+    }
 }
 
 let handleVisualize = () => {
@@ -27,7 +34,6 @@ let handleVisualize = () => {
 
     let unvisited = []
     let stack = []
-    let directions = [[1, 0],[0, 1],[-1, 1],[-1, 0],[0, -1],[1, -1]]
 
     for (let i = 0; i < cells.length; i++) {
         cells[i].classList.replace('status-empty','status-hidden')
@@ -47,7 +53,7 @@ let handleVisualize = () => {
         let q = +currentCell.classList[1].slice(2)
         let r = +currentCell.classList[2].slice(2)
 
-        let neighbours = directions
+        let neighbours = Hex.directions
             .map(v => document.getElementsByClassName(`q-${q + v[0]} r-${r + v[1]}`)[0])
             .filter(v => v.classList.contains('status-wall'))
             .filter(v => unvisited.filter(un => un === v).length > 0)
