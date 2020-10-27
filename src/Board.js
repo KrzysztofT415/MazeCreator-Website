@@ -4,8 +4,8 @@ class Board {
     constructor() {
         this.hexes = []
         this.size = 50
-        let width = 10
-        let height = 10
+        let width = 2
+        let height = 2
 
         let sth = [...Array(width).keys()].map(
             x => x = [...Array(height).keys()].map(
@@ -28,7 +28,7 @@ class Board {
         let hex = this.pixel_to_flat_hex(x, y)
         let object = document.getElementById(`${hex.q}-${hex.r}`)
         if (object !== null) {
-            this.hexes = this.hexes.filter(v => ((v.coordinates.q !== hex.q) && (v.coordinates.r !== hex.r)))
+            this.hexes = this.hexes.filter(v => ((v.getCoordinates.q !== hex.q) && (v.getCoordinates.r !== hex.r)))
             document.getElementById('grid').removeChild(object)
         }
     }
@@ -75,5 +75,10 @@ class Board {
         return this.cube_to_axial(this.cube_round(this.axial_to_cube(hex)))
     }
 
-    get size() { return this.size }
+    getHex(q, r) {
+        return this.hexes.filter(v => ((v.getCoordinates.q === q) && (v.getCoordinates.r === r)))[0]
+    }
+    get getSize() { return this.size }
+    get getHexes() {
+        return this.hexes }
 }

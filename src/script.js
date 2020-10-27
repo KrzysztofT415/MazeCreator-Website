@@ -50,11 +50,10 @@ let moveUp = () => {
 
 grid.addEventListener('pointerdown', downListener)
 
-if (isMobile) { grid.addEventListener('touchmove', moveGrid) }
 
 let highlight = e => {
-    let pos = board.pixel_to_flat_hex(getTranslatedPosition(e.clientX, e.clientY))
-    document.getElementById('hex-pointer').style.transform = `translate(${pos.q * board.size * 1.5}px ${(pos.r + pos.q / 2.0) * board.size * Math.sqrt(3)}px)`
+    // let pos = board.pixel_to_flat_hex(getTranslatedPosition(e.clientX, e.clientY))
+    // document.getElementById('hex-pointer').style.transform = `translate(${pos.q * board.getSize * 1.5}px ${(pos.r + pos.q / 2.0) * board.getSize * Math.sqrt(3)}px)`
 }
 
 grid.addEventListener('pointermove', highlight)
@@ -70,3 +69,21 @@ let handleWheel = e => {
 }
 
 grid.addEventListener('wheel', handleWheel)
+let init = 0
+let algorithm
+let handleVisualize = () => {
+
+    if (!init) {
+        algorithm = getComputedStyle(document.documentElement).getPropertyValue('--generating-algorithm')
+        switch (algorithm) {
+            case 'recursiveBacktracking':
+                algorithm = new RecursiveBacktrackingAlgorithm(board)
+                break;
+        }
+        init = 1
+    }
+
+    algorithm.step()
+}
+
+document.getElementById('visualize').addEventListener('click', () => handleVisualize())

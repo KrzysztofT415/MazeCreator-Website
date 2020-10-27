@@ -4,7 +4,7 @@ class Hex {
     center
     corners
     edges
-    static directions = [[1, 0],[0, 1],[-1, 1],[-1, 0],[0, -1],[1, -1]]
+    directions = [{q: 1, r: 0},{q: 0, r: 1},{q: -1, r: 1},{q: -1, r: 0},{q: 0, r: -1},{q: 1, r: -1}]
 
     constructor(q, r) {
         this.coordinates = {q: q, r: r}
@@ -31,5 +31,8 @@ class Hex {
 
     set setState(newState) { this.object.classList.replace(``,`status-${newState}`) }
 
-    get coordinates() { return this.coordinates }
+    get getEdges() { return this.edges }
+    get getCoordinates() { return this.coordinates }
+    get getDirections() { return this.directions }
+    get getObject() { return this.object }
 }
