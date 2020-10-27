@@ -13,7 +13,7 @@
   --secondaryL: #ffff72;
   --secondaryM: #ffeb3b;
   --secondaryD: #c8b900;
-  --darkL: #373b42;
+  --darkL: #61656d;
   --darkM: #373b42;
   --darkD: #11151b;
   --white: #eceff1;
@@ -51,7 +51,7 @@ header {
 .toggle-button {
   width: 30px;
   height: 3px;
-  background: #fff;
+  background: var(--white);
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(255,101,47,.2);
   transition: all .5s ease-in-out;
