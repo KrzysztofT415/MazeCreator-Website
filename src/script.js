@@ -1,6 +1,7 @@
 let grid = document.getElementById('grid')
-grid.classList.add((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'notMobile'));
-
+let isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'notMobile')
+grid.classList.add(isMobile)
+isMobile = (isMobile === 'mobile')
 const board = new Board()
 
 let downListener = e => {
@@ -48,6 +49,8 @@ let moveUp = () => {
 }
 
 grid.addEventListener('pointerdown', downListener)
+
+if (isMobile) { grid.addEventListener('touchmove', moveGrid) }
 
 let highlight = e => {
     let pos = board.pixel_to_flat_hex(getTranslatedPosition(e.clientX, e.clientY))

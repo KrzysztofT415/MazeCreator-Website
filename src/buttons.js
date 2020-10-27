@@ -14,7 +14,7 @@ let handleReset = () => {
     }
 }
 
-let toggle = (mode) => {
+let toggleDrawingMode = (mode) => {
     switch (mode) {
         case 'erase':
             document.getElementById('erase').classList.add('chosen')
