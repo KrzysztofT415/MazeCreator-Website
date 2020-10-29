@@ -21,15 +21,13 @@ let downListener = e => {
 }
 
 let moveGrid = e => {
-    let values = getCurrentRootProperties()
+    let values = getCurrentRootTransform()
     values.tx += e.movementX
     values.ty += e.movementY
     document.documentElement.style.setProperty('--current-translateX', values.tx)
     document.documentElement.style.setProperty('--current-translateY', values.ty)
-    let items = document.getElementsByClassName('type-hex')
-    for (let i = 0; i < items.length; ++i) {
-        items[i].style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
-    }
+    document.getElementById('cells').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
+    document.getElementById('walls').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
 }
 
 let draw = e => {
@@ -59,13 +57,11 @@ let highlight = e => {
 grid.addEventListener('pointermove', highlight)
 
 let handleWheel = e => {
-    let values = getCurrentRootProperties()
+    let values = getCurrentRootTransform()
     values.sc = Math.min(Math.max(.2, +values.sc + e.deltaY * -0.0004), 1);
     document.documentElement.style.setProperty('--current-scale', values.sc)
-    let items = document.getElementsByClassName('type-hex')
-    for (let i = 0; i < items.length; ++i) {
-        items[i].style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
-    }
+    document.getElementById('cells').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
+    document.getElementById('walls').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
 }
 
 grid.addEventListener('wheel', handleWheel)
@@ -83,7 +79,11 @@ let handleVisualize = () => {
         init = 1
     }
 
-    algorithm.step()
+    let status = 1
+    do {
+        status = algorithm.step()
+    } while (status !== 0)
+    init = 0;
 }
 
 document.getElementById('visualize').addEventListener('click', () => handleVisualize())

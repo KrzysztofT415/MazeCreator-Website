@@ -4,8 +4,8 @@ class Board {
     constructor() {
         this.hexes = []
         this.size = 50
-        let width = 2
-        let height = 2
+        let width = 11
+        let height = 11
 
         let sth = [...Array(width).keys()].map(
             x => x = [...Array(height).keys()].map(
@@ -29,7 +29,7 @@ class Board {
         let object = document.getElementById(`${hex.q}-${hex.r}`)
         if (object !== null) {
             this.hexes = this.hexes.filter(v => ((v.getCoordinates.q !== hex.q) && (v.getCoordinates.r !== hex.r)))
-            document.getElementById('grid').removeChild(object)
+            document.getElementById('cells').removeChild(object)
         }
     }
 

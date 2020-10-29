@@ -6,14 +6,6 @@ toggleButton.addEventListener('click', () => {
     toggleButton.classList.toggle('open')
 })
 
-let handleReset = () => {
-    while (document.getElementsByClassName('type-hex').length > 0) {
-        for (let i = 0; i < document.getElementsByClassName('type-hex').length; ++i) {
-            document.getElementById('grid').removeChild(document.getElementsByTagName('polygon').item(i))
-        }
-    }
-}
-
 let toggleDrawingMode = (mode) => {
     switch (mode) {
         case 'erase':
@@ -27,4 +19,9 @@ let toggleDrawingMode = (mode) => {
             document.getElementById('grid').classList.add('drawing')
             break;
     }
+}
+
+let handleReset = () => {
+    document.getElementById('cells').innerHTML = ""
+    document.getElementById('walls').innerHTML = ""
 }

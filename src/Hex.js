@@ -21,12 +21,22 @@ class Hex {
         this.object = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
         this.object.setAttribute('points', this.corners.reduce((acc, v) => acc + ' ' + v.toString()))
         this.object.id = q + '-' + r
-        this.object.classList.add('type-hex', 'q-' + q, 'r-' + r, 'q-' + (q % 2 !== 0 ? 'odd' : 'even'), 'r-' + (r % 2 !== 0 ? 'odd' : 'even'), 'status-empty')
+        this.object.classList.add('empty')
+        document.getElementById('cells').appendChild(this.object)
 
-        let values = getCurrentRootProperties()
-        this.object.style.transform = `translate(${values.tx}px, ${values.ty}px) scale(${values.sc})`
-
-        document.getElementById('grid').appendChild(this.object)
+        for (let i = 0; i < this.edges.length; i++) {
+            let wall = document.getElementById((q + this.directions[i].q) + '-' + (r + this.directions[i].r) + '|' + q + '-' + r)
+            if (wall === null) {
+                wall = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+                wall.setAttribute('x1', this.edges[i][0][0] + '')
+                wall.setAttribute('y1', this.edges[i][0][1] + '')
+                wall.setAttribute('x2', this.edges[i][1][0] + '')
+                wall.setAttribute('y2', this.edges[i][1][1] + '')
+                wall.id = q + '-' + r + '|' + (q + this.directions[i].q) + '-' + (r + this.directions[i].r)
+                document.getElementById('walls').appendChild(wall)
+            }
+            this.edges[i] = wall
+        }
     }
 
     set setState(newState) { this.object.classList.replace(``,`status-${newState}`) }

@@ -2,28 +2,22 @@ class RecursiveBacktrackingAlgorithm {
     unvisited
     stack
     currentCell
+    colors
 
     constructor(board) {
         this.unvisited = shuffleArray(board.getHexes)
         this.stack = []
         this.currentCell = this.unvisited.pop()
+        this.colors = getCurrentRootColors()
     }
 
     step = () => {
         this.unvisited = deleteFromArray(this.unvisited, this.currentCell)
-        this.currentCell.getObject.style.fill = 'orange'
-        let wall = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-        wall.setAttribute('x1', this.currentCell.getEdges[0][0][0])
-        wall.setAttribute('y1', this.currentCell.getEdges[0][0][1])
-        wall.setAttribute('x2', this.currentCell.getEdges[0][1][0])
-        wall.setAttribute('y2', this.currentCell.getEdges[0][1][1])
-        wall.style.strokeWidth = '3px'
-        wall.style.stroke = 'blue'
-        grid.appendChild(wall)
+        this.currentCell.getObject.style.fill = this.colors.PL
 
         if (this.unvisited.length + this.stack.length === 0) {
-            this.currentCell.getObject.style.fill = 'blue'
-            return undefined
+            this.currentCell.getObject.style.fill = this.colors.SL
+            return 0
         }
 
         let neighbours = this.getNeighbours()
@@ -31,17 +25,23 @@ class RecursiveBacktrackingAlgorithm {
         if (neighbours.length > 0) {
             this.stack = [...this.stack, this.currentCell]
             let nextCell = shuffleArray(neighbours).pop()
-            nextCell.getObject.style.fill = 'yellow'
+
+            let wall = document.getElementById(this.currentCell.getCoordinates.q + '-' + this.currentCell.getCoordinates.r + "|" + nextCell.getCoordinates.q + '-' + nextCell.getCoordinates.r)
+            if (wall === null) { wall = document.getElementById(nextCell.getCoordinates.q + '-' + nextCell.getCoordinates.r + "|" + this.currentCell.getCoordinates.q + '-' + this.currentCell.getCoordinates.r)}
+            document.getElementById('walls').removeChild(wall)
+
+            nextCell.getObject.style.fill = this.colors.SM
             this.currentCell = nextCell
 
         } else if (this.stack.length > 0) {
-            this.currentCell.getObject.style.fill = 'blue'
+            this.currentCell.getObject.style.fill = this.colors.SL
             this.currentCell = this.stack.pop()
 
         } else if (this.unvisited.length > 0) {
-            this.currentCell.getObject.style.fill = 'blue'
+            this.currentCell.getObject.style.fill = this.colors.SL
             this.currentCell = this.unvisited.pop()
         }
+        return 1
     }
 
     getNeighbours = () => {
