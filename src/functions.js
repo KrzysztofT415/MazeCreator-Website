@@ -10,6 +10,7 @@ let getCurrentRootTransform = () => {
 
 let getCurrentRootColors = () => {
     return {
+    SLE: getComputedStyle(document.documentElement).getPropertyValue('--secondaryLE'),
     SL: getComputedStyle(document.documentElement).getPropertyValue('--secondaryL'),
     SM: getComputedStyle(document.documentElement).getPropertyValue('--secondaryM'),
     SD: getComputedStyle(document.documentElement).getPropertyValue('--secondaryD'),

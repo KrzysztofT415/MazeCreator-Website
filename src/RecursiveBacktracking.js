@@ -16,7 +16,7 @@ class RecursiveBacktrackingAlgorithm {
         this.currentCell.getObject.style.fill = this.colors.PL
 
         if (this.unvisited.length + this.stack.length === 0) {
-            this.currentCell.getObject.style.fill = this.colors.SL
+            this.currentCell.getObject.style.fill = this.colors.SLE
             return 0
         }
 
@@ -34,11 +34,11 @@ class RecursiveBacktrackingAlgorithm {
             this.currentCell = nextCell
 
         } else if (this.stack.length > 0) {
-            this.currentCell.getObject.style.fill = this.colors.SL
+            this.currentCell.getObject.style.fill = this.colors.SLE
             this.currentCell = this.stack.pop()
 
         } else if (this.unvisited.length > 0) {
-            this.currentCell.getObject.style.fill = this.colors.SL
+            this.currentCell.getObject.style.fill = this.colors.SLE
             this.currentCell = this.unvisited.pop()
         }
         return 1

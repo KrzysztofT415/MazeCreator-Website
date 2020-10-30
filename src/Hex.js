@@ -19,8 +19,8 @@ class Hex {
             v => [this.corners[v], this.corners[(v + 1) % 6]])
 
         this.object = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-        this.object.setAttribute('points', this.corners.reduce((acc, v) => acc + ' ' + v.toString()))
         this.object.id = q + '-' + r
+        this.object.setAttribute('points', this.corners.reduce((acc, v) => acc + ' ' + v.toString()))
         this.object.classList.add('empty')
         document.getElementById('cells').appendChild(this.object)
 
@@ -28,11 +28,11 @@ class Hex {
             let wall = document.getElementById((q + this.directions[i].q) + '-' + (r + this.directions[i].r) + '|' + q + '-' + r)
             if (wall === null) {
                 wall = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+                wall.id = q + '-' + r + '|' + (q + this.directions[i].q) + '-' + (r + this.directions[i].r)
                 wall.setAttribute('x1', this.edges[i][0][0] + '')
                 wall.setAttribute('y1', this.edges[i][0][1] + '')
                 wall.setAttribute('x2', this.edges[i][1][0] + '')
                 wall.setAttribute('y2', this.edges[i][1][1] + '')
-                wall.id = q + '-' + r + '|' + (q + this.directions[i].q) + '-' + (r + this.directions[i].r)
                 document.getElementById('walls').appendChild(wall)
             }
             this.edges[i] = wall

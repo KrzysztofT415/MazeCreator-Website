@@ -79,6 +79,5 @@ class Board {
         return this.hexes.filter(v => ((v.getCoordinates.q === q) && (v.getCoordinates.r === r)))[0]
     }
     get getSize() { return this.size }
-    get getHexes() {
-        return this.hexes }
+    get getHexes() { return this.hexes }
 }

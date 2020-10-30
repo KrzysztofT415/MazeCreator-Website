@@ -7,6 +7,11 @@
   --generating-algorithm:recursiveBacktracking;
   --solving-algorithm:astar;
 
+  --green: #8bc34a;
+  --red: #f44336;
+  --brown: #5d4037;
+
+  --secondaryLE: #ffffa4;
   --secondaryL: #ffff72;
   --secondaryM: #ffeb3b;
   --secondaryD: #c8b900;
@@ -187,6 +192,15 @@ header {
 
 #walls {
   stroke: var(--darkD);
-  stroke-width: 5px;
+  stroke-width: 3px;
   stroke-linecap: round;
+}
+
+#mouse {
+  fill: var(--red);
+  fill-opacity: 30%;
+  stroke: var(--red);
+  stroke-width: 6px;
+  stroke-dasharray: 10,10;
+  z-index: 4;
 }

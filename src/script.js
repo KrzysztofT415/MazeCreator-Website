@@ -48,13 +48,22 @@ let moveUp = () => {
 
 grid.addEventListener('pointerdown', downListener)
 
+let pointer = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
+pointer.setAttribute('points', '50,0 25.000000000000007,43.30127018922193 -24.99999999999999,43.30127018922194 -50,6.123233995736766e-15 -25.00000000000002,-43.301270189221924 25.000000000000007,-43.30127018922193')
+pointer.id = 'pointer'
+document.getElementById('mouse').appendChild(pointer)
 
 let highlight = e => {
-    // let pos = board.pixel_to_flat_hex(getTranslatedPosition(e.clientX, e.clientY))
-    // document.getElementById('hex-pointer').style.transform = `translate(${pos.q * board.getSize * 1.5}px ${(pos.r + pos.q / 2.0) * board.getSize * Math.sqrt(3)}px)`
+    let pos = getTranslatedPosition(e.clientX, e.clientY)
+    pos = board.pixel_to_flat_hex(pos.x, pos.y)
+    let values = getCurrentRootTransform()
+    pos.r = (pos.r + pos.q / 2.0) * board.getSize * Math.sqrt(3) * values.sc
+    pos.q = pos.q * board.getSize * 1.5 * values.sc
+    document.getElementById('pointer').setAttribute('transform', `translate(${pos.q + values.tx} ${pos.r + values.ty}) scale(${values.sc})`)
 }
 
 grid.addEventListener('pointermove', highlight)
+grid.addEventListener('wheel', highlight)
 
 let handleWheel = e => {
     let values = getCurrentRootTransform()
