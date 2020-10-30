@@ -28,7 +28,16 @@ class Board {
         let hex = this.pixel_to_flat_hex(x, y)
         let object = document.getElementById(`${hex.q}-${hex.r}`)
         if (object !== null) {
-            this.hexes = this.hexes.filter(v => ((v.getCoordinates.q !== hex.q) && (v.getCoordinates.r !== hex.r)))
+            let current = this.hexes.filter(v => ((v.getCoordinates.q === hex.q) && (v.getCoordinates.r === hex.r)))[0]
+            current.getEdges.map(edge => {
+                let coords = edge.id.split('|')[0].split('.')
+                let coords2 = edge.id.split('|')[1].split('.')
+                if (board.getHex(coords[0], coords[1]) === undefined || board.getHex(coords2[0], coords2[1]) === undefined) {
+                    document.getElementById('walls').removeChild(edge)
+                }
+            })
+
+            this.hexes = this.hexes.filter(v => ((v.getCoordinates.q !== hex.q) || (v.getCoordinates.r !== hex.r)))
             document.getElementById('cells').removeChild(object)
         }
     }

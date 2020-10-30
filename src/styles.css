@@ -194,13 +194,19 @@ header {
   stroke: var(--darkD);
   stroke-width: 3px;
   stroke-linecap: round;
+  z-index: 3;
+}
+
+#cells {
+  z-index: 2;
 }
 
 #mouse {
   fill: var(--red);
   fill-opacity: 30%;
   stroke: var(--red);
-  stroke-width: 6px;
-  stroke-dasharray: 10,10;
-  z-index: 4;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-dasharray: 5,8;
+  z-index: 1;
 }

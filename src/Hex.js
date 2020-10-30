@@ -28,7 +28,7 @@ class Hex {
             let wall = document.getElementById((q + this.directions[i].q) + '-' + (r + this.directions[i].r) + '|' + q + '-' + r)
             if (wall === null) {
                 wall = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-                wall.id = q + '-' + r + '|' + (q + this.directions[i].q) + '-' + (r + this.directions[i].r)
+                wall.id = q + '.' + r + '|' + (q + this.directions[i].q) + '.' + (r + this.directions[i].r)
                 wall.setAttribute('x1', this.edges[i][0][0] + '')
                 wall.setAttribute('y1', this.edges[i][0][1] + '')
                 wall.setAttribute('x2', this.edges[i][1][0] + '')
