@@ -19,7 +19,7 @@ class Hex {
             v => [this.corners[v], this.corners[(v + 1) % 6]])
 
         this.object = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-        this.object.id = q + '-' + r
+        this.object.id = q + '.' + r
         this.object.setAttribute('points', this.corners.reduce((acc, v) => acc + ' ' + v.toString()))
         this.object.classList.add('empty')
         document.getElementById('cells').appendChild(this.object)

@@ -4,7 +4,7 @@
   --current-scale: 1;
 
   --board-type:hex;
-  --generating-algorithm:recursiveBacktracking;
+  --generating-algorithm:kruskals;
   --solving-algorithm:astar;
 
   --green: #8bc34a;
@@ -202,9 +202,9 @@ header {
 }
 
 #mouse {
-  fill: var(--red);
+  fill: var(--primaryD);
   fill-opacity: 30%;
-  stroke: var(--red);
+  stroke: var(--primaryD);
   stroke-width: 4px;
   stroke-linecap: round;
   stroke-dasharray: 5,8;

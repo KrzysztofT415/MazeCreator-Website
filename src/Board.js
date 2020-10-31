@@ -4,8 +4,8 @@ class Board {
     constructor() {
         this.hexes = []
         this.size = 50
-        let width = 11
-        let height = 11
+        let width = 1
+        let height = 1
 
         let sth = [...Array(width).keys()].map(
             x => x = [...Array(height).keys()].map(
@@ -20,19 +20,19 @@ class Board {
 
     addHexOnPoint = (x, y) => {
         let hex = this.pixel_to_flat_hex(x, y)
-        let object = document.getElementById(`${hex.q}-${hex.r}`)
+        let object = document.getElementById(`${hex.q}.${hex.r}`)
         if (object === null) { this.hexes = [...this.hexes, new Hex(hex.q, hex.r)] }
     }
 
     removeHexOnPoint = (x, y) => {
         let hex = this.pixel_to_flat_hex(x, y)
-        let object = document.getElementById(`${hex.q}-${hex.r}`)
+        let object = document.getElementById(`${hex.q}.${hex.r}`)
         if (object !== null) {
             let current = this.hexes.filter(v => ((v.getCoordinates.q === hex.q) && (v.getCoordinates.r === hex.r)))[0]
             current.getEdges.map(edge => {
-                let coords = edge.id.split('|')[0].split('.')
+                let coords1 = edge.id.split('|')[0].split('.')
                 let coords2 = edge.id.split('|')[1].split('.')
-                if (board.getHex(coords[0], coords[1]) === undefined || board.getHex(coords2[0], coords2[1]) === undefined) {
+                if (board.getHex(coords1[0], coords1[1]) === undefined || board.getHex(coords2[0], coords2[1]) === undefined) {
                     document.getElementById('walls').removeChild(edge)
                 }
             })
@@ -88,5 +88,19 @@ class Board {
         return this.hexes.filter(v => ((v.getCoordinates.q === q) && (v.getCoordinates.r === r)))[0]
     }
     get getSize() { return this.size }
-    get getHexes() { return this.hexes }
+    getHexes() {
+        let hexesr = []
+        this.hexes.map(v => hexesr = [...hexesr, v])
+        return hexesr
+    }
+
+    getWalls = () => {
+        let walls = []
+        this.hexes.map(cell => {
+            cell.getEdges.map(edge => {
+                if (getElementIfExists(walls, edge) === undefined) { walls = [...walls, edge] }
+            })
+        })
+        return walls
+    }
 }

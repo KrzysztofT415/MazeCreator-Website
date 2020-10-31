@@ -78,21 +78,32 @@ let init = 0
 let algorithm
 let handleVisualize = () => {
 
+    let cells = document.getElementById('cells').children
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].style.fill = getCurrentRootColors().DD
+    }
+
     if (!init) {
         algorithm = getComputedStyle(document.documentElement).getPropertyValue('--generating-algorithm')
         switch (algorithm) {
             case 'recursiveBacktracking':
                 algorithm = new RecursiveBacktrackingAlgorithm(board)
                 break;
+            case 'kruskals':
+                algorithm = new KruskalsAlgorithm(board)
+                break;
         }
         init = 1
     }
 
-    let status = 1
-    do {
-        status = algorithm.step()
-    } while (status !== 0)
-    init = 0;
+    let animation = () => {
+        let end = algorithm.step()
+        if (!end) {
+            setTimeout(() => requestAnimationFrame(animation), 100)
+        }
+    }
+
+    requestAnimationFrame(animation)
 }
 
 document.getElementById('visualize').addEventListener('click', () => handleVisualize())

@@ -17,7 +17,8 @@ class RecursiveBacktrackingAlgorithm {
 
         if (this.unvisited.length + this.stack.length === 0) {
             this.currentCell.getObject.style.fill = this.colors.SLE
-            return 0
+            console.log('end')
+            return true
         }
 
         let neighbours = this.getNeighbours()
@@ -40,7 +41,6 @@ class RecursiveBacktrackingAlgorithm {
             this.currentCell.getObject.style.fill = this.colors.SLE
             this.currentCell = this.unvisited.pop()
         }
-        return 1
     }
 
     getNeighbours = () => {
