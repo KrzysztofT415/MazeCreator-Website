@@ -25,7 +25,7 @@ class Hex {
         document.getElementById('cells').appendChild(this.object)
 
         for (let i = 0; i < this.edges.length; i++) {
-            let wall = document.getElementById((q + this.directions[i].q) + '-' + (r + this.directions[i].r) + '|' + q + '-' + r)
+            let wall = document.getElementById((q + this.directions[i].q) + '.' + (r + this.directions[i].r) + '|' + q + '.' + r)
             if (wall === null) {
                 wall = document.createElementNS('http://www.w3.org/2000/svg', 'line')
                 wall.id = q + '.' + r + '|' + (q + this.directions[i].q) + '.' + (r + this.directions[i].r)

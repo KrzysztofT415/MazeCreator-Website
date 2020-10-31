@@ -26,11 +26,10 @@ class RecursiveBacktrackingAlgorithm {
             this.stack = [...this.stack, this.currentCell]
             let nextCell = shuffleArray(neighbours).pop()
 
-            let wall = document.getElementById(this.currentCell.getCoordinates.q + '-' + this.currentCell.getCoordinates.r + "|" + nextCell.getCoordinates.q + '-' + nextCell.getCoordinates.r)
-            if (wall === null) { wall = document.getElementById(nextCell.getCoordinates.q + '-' + nextCell.getCoordinates.r + "|" + this.currentCell.getCoordinates.q + '-' + this.currentCell.getCoordinates.r)}
+            let wall = document.getElementById(this.currentCell.getCoordinates.q + '.' + this.currentCell.getCoordinates.r + "|" + nextCell.getCoordinates.q + '.' + nextCell.getCoordinates.r)
+            if (wall === null) { wall = document.getElementById(nextCell.getCoordinates.q + '.' + nextCell.getCoordinates.r + "|" + this.currentCell.getCoordinates.q + '.' + this.currentCell.getCoordinates.r)}
+            console.log(wall)
             document.getElementById('walls').removeChild(wall)
-
-            nextCell.getObject.style.fill = this.colors.SM
             this.currentCell = nextCell
 
         } else if (this.stack.length > 0) {
