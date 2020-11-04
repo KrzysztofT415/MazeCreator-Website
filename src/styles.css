@@ -43,12 +43,13 @@ header {
 }
 
 #instruction {
-  position: absolute;
+  position: fixed;
   width: 50%;
   height: 50%;
   background: white;
   left: 25%;
-  top: 25%
+  top: 25%;
+  z-index: 10;
 }
 
 #burger {
