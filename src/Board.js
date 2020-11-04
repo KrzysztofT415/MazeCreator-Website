@@ -4,10 +4,11 @@ class Board {
     constructor() {
         this.hexes = []
         this.size = 50
-        let width = 1
-        let height = 1
+        let width = 20
+        let height = 20
 
-        let sth = [...Array(width).keys()].map(
+        let sth = [...Array(width).keys()]
+            sth.map(
             x => x = [...Array(height).keys()].map(
                 y => this.hexes = [...this.hexes, new Hex(x, y - Math.floor(x / 2))]
             )
@@ -28,16 +29,16 @@ class Board {
         let hex = this.pixel_to_flat_hex(x, y)
         let object = document.getElementById(`${hex.q}.${hex.r}`)
         if (object !== null) {
-            let current = this.hexes.filter(v => ((v.getCoordinates.q === hex.q) && (v.getCoordinates.r === hex.r)))[0]
+            let current = this.hexes.filter(v => ((v.getCoordinates().q === hex.q) && (v.getCoordinates().r === hex.r)))[0]
             current.getEdges.map(edge => {
                 let coords1 = edge.id.split('|')[0].split('.')
                 let coords2 = edge.id.split('|')[1].split('.')
-                if (board.getHex(coords1[0], coords1[1]) === undefined || board.getHex(coords2[0], coords2[1]) === undefined) {
+                if ((board.getHex(coords1[0], coords1[1]).length === 0) || (board.getHex(coords2[0], coords2[1]).length === 0)) {
                     document.getElementById('walls').removeChild(edge)
                 }
             })
 
-            this.hexes = this.hexes.filter(v => ((v.getCoordinates.q !== hex.q) || (v.getCoordinates.r !== hex.r)))
+            this.hexes = this.hexes.filter(v => ((v.getCoordinates().q !== hex.q) || (v.getCoordinates().r !== hex.r)))
             document.getElementById('cells').removeChild(object)
         }
     }
@@ -84,11 +85,11 @@ class Board {
         return this.cube_to_axial(this.cube_round(this.axial_to_cube(hex)))
     }
 
-    getHex(q, r) {
-        return this.hexes.filter(v => ((v.getCoordinates.q === q) && (v.getCoordinates.r === r)))[0]
+    getHex = (q, r) => {
+        return this.hexes.filter(v => ((v.getCoordinates().q === +q) && (v.getCoordinates().r === +r)))
     }
     get getSize() { return this.size }
-    getHexes() {
+    getHexes = () => {
         let hexesr = []
         this.hexes.map(v => hexesr = [...hexesr, v])
         return hexesr

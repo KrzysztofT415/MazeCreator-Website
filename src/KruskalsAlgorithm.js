@@ -2,6 +2,7 @@ class KruskalsAlgorithm {
     sets
     walls
     colors
+    removedWalls
 
     constructor(board) {
         this.walls = shuffleArray(board.getWalls()).map(wall => {
@@ -17,6 +18,7 @@ class KruskalsAlgorithm {
             this.sets[i] = {set: i, cells: [this.sets[i]]}
         }
         this.colors = getCurrentRootColors()
+        this.removedWalls = []
     }
 
     step = () => {
@@ -41,13 +43,16 @@ class KruskalsAlgorithm {
                 wall.h2.style.fill = this.colors.SLE
                 set2.cells.map(v => set1.cells = [...set1.cells, v])
                 this.sets = deleteFromArray(this.sets, set2)
+                this.removedWalls = [...this.removedWalls, wall.wall]
                 document.getElementById('walls').removeChild(wall.wall)
             }
+            else { this.step() }
 
         return false
         }
     }
 
+    getRemovedWalls = () => { return this.removedWalls }
 }
 //     else {
 //         Pair<Pair<Cell, Integer>,Pair<Cell, Integer>> wall = walls.get(random.nextInt(walls.size()));

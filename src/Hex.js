@@ -42,7 +42,7 @@ class Hex {
     set setState(newState) { this.object.classList.replace(``,`status-${newState}`) }
 
     get getEdges() { return this.edges }
-    get getCoordinates() { return this.coordinates }
+    getCoordinates = () => { return this.coordinates }
     get getDirections() { return this.directions }
     get getObject() { return this.object }
 }

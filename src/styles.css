@@ -4,7 +4,7 @@
   --current-scale: 1;
 
   --board-type:hex;
-  --generating-algorithm:kruskals;
+  --generating-algorithm:recursiveBacktracking;
   --solving-algorithm:astar;
 
   --green: #8bc34a;
@@ -180,13 +180,7 @@ header {
   z-index: -1;
 }
 
-.empty {
-  stroke: var(--white);
-  fill: var(--white);
-  opacity: 80%;
-}
-
-#grid.notMobile .empty:hover {
+#cells *:hover {
   opacity: 100%;
 }
 
@@ -209,4 +203,10 @@ header {
   stroke-linecap: round;
   stroke-dasharray: 5,8;
   z-index: 1;
+}
+
+.empty {
+  stroke: var(--white);
+  fill: var(--white);
+  opacity: 80%;
 }

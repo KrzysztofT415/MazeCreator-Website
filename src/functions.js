@@ -31,7 +31,7 @@ let getTranslatedPosition = (x, y) => {
 }
 
 let shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
+    for (let i = array.length - 1; i > 0; --i) {
         let j = getRandomInt(0, (i + 1));
         let temp = array[i];
         array[i] = array[j];

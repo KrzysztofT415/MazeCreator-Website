@@ -3,12 +3,14 @@ class RecursiveBacktrackingAlgorithm {
     stack
     currentCell
     colors
+    removedWalls
 
     constructor(board) {
-        this.unvisited = shuffleArray(board.getHexes)
+        this.unvisited = shuffleArray(board.getHexes())
         this.stack = []
         this.currentCell = this.unvisited.pop()
         this.colors = getCurrentRootColors()
+        this.removedWalls = []
     }
 
     step = () => {
@@ -22,14 +24,13 @@ class RecursiveBacktrackingAlgorithm {
         }
 
         let neighbours = this.getNeighbours()
-
         if (neighbours.length > 0) {
             this.stack = [...this.stack, this.currentCell]
             let nextCell = shuffleArray(neighbours).pop()
 
-            let wall = document.getElementById(this.currentCell.getCoordinates.q + '.' + this.currentCell.getCoordinates.r + "|" + nextCell.getCoordinates.q + '.' + nextCell.getCoordinates.r)
-            if (wall === null) { wall = document.getElementById(nextCell.getCoordinates.q + '.' + nextCell.getCoordinates.r + "|" + this.currentCell.getCoordinates.q + '.' + this.currentCell.getCoordinates.r)}
-            console.log(wall)
+            let wall = document.getElementById(this.currentCell.getCoordinates().q + '.' + this.currentCell.getCoordinates().r + "|" + nextCell.getCoordinates().q + '.' + nextCell.getCoordinates().r)
+            if (wall === null) { wall = document.getElementById(nextCell.getCoordinates().q + '.' + nextCell.getCoordinates().r + "|" + this.currentCell.getCoordinates().q + '.' + this.currentCell.getCoordinates().r)}
+            this.removedWalls = [...this.removedWalls, wall]
             document.getElementById('walls').removeChild(wall)
             this.currentCell = nextCell
 
@@ -45,8 +46,10 @@ class RecursiveBacktrackingAlgorithm {
 
     getNeighbours = () => {
         return this.currentCell.getDirections
-            .map(direction => { return board.getHex(this.currentCell.getCoordinates.q + direction.q, this.currentCell.getCoordinates.r + direction.r) })
+            .map(direction => { return board.getHex(this.currentCell.getCoordinates().q + direction.q, this.currentCell.getCoordinates().r + direction.r)[0] })
             .filter(value => value !== undefined)
             .filter(value => getElementIfExists(this.unvisited, value) !== undefined )
     }
+
+    getRemovedWalls = () => { return this.removedWalls }
 }

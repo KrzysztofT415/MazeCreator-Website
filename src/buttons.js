@@ -25,3 +25,22 @@ let handleReset = () => {
     document.getElementById('cells').innerHTML = ""
     document.getElementById('walls').innerHTML = ""
 }
+
+let state = 0
+document.getElementById('algorithm').addEventListener('click', () => {
+    state = ++state % 3
+    switch (state) {
+        case 0:
+            document.documentElement.style.setProperty('--generating-algorithm', 'recursiveBacktracking')
+            document.getElementById('algorithm').innerText = 'Recursive Backtracking Algorithm'
+            break;
+        case 1:
+            document.documentElement.style.setProperty('--generating-algorithm', 'kruskals')
+            document.getElementById('algorithm').innerText = "Kruskal's Algorithm"
+            break;
+        case 2:
+            document.documentElement.style.setProperty('--generating-algorithm', 'prims')
+            document.getElementById('algorithm').innerText = "Prim's Algorithm"
+            break;
+    }
+})

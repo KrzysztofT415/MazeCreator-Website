@@ -82,6 +82,12 @@ let handleVisualize = () => {
     for (let i = 0; i < cells.length; i++) {
         cells[i].style.fill = getCurrentRootColors().DD
     }
+    if (algorithm !== undefined) {
+        let walls = algorithm.getRemovedWalls()
+        for (let i = 0; i < walls.length; i++) {
+            document.getElementById('walls').appendChild(walls[i])
+        }
+    }
 
     if (!init) {
         algorithm = getComputedStyle(document.documentElement).getPropertyValue('--generating-algorithm')
@@ -92,6 +98,9 @@ let handleVisualize = () => {
             case 'kruskals':
                 algorithm = new KruskalsAlgorithm(board)
                 break;
+            case 'prims':
+                algorithm = new PrimsAlgorithm(board)
+                break;
         }
         init = 1
     }
@@ -99,7 +108,9 @@ let handleVisualize = () => {
     let animation = () => {
         let end = algorithm.step()
         if (!end) {
-            setTimeout(() => requestAnimationFrame(animation), 100)
+            setTimeout(() => requestAnimationFrame(animation), 30)
+        } else {
+            init = 0;
         }
     }
 
