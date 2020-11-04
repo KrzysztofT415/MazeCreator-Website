@@ -42,6 +42,15 @@ header {
   z-index: 1;
 }
 
+#instruction {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: white;
+  left: 25%;
+  top: 25%
+}
+
 #burger {
   position: absolute;
   right: 1rem;
