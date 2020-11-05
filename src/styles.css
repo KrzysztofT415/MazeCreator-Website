@@ -110,13 +110,23 @@ header {
   position: relative;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: var(--darkD);
   color: var(--white);
+
 }
 
 #title {
   font-size: 1.5rem;
   margin: .5rem;
+  color: var(--secondaryLE);
+  font-weight: bolder;
+}
+#title p span {
+  display: inline-block;
+  margin-right: 5px;
+}
+#title p span:first-letter {
+  color: var(--primaryL);
 }
 
 #navbar-links {
@@ -138,6 +148,20 @@ header {
   text-decoration: none;
   color: var(--white);
   padding: 1rem;
+  font-size: 1.1rem;
+}
+
+#navbar-links li a p span{
+  display: inline-block;
+}
+
+#navbar-links li a:first-letter,
+#navbar-links li a p span:first-letter {
+  color: var(--primaryL);
+}
+
+#algorithm p:first-letter {
+  color: inherit;
 }
 
 #navbar-links li:hover {

@@ -118,3 +118,26 @@ let handleVisualize = () => {
 }
 
 document.getElementById('visualize').addEventListener('click', () => handleVisualize())
+
+let handleKeys = e => {
+    switch (e.code) {
+        case 'KeyA':
+            document.getElementById('algorithm').click()
+            break;
+        case 'KeyR':
+            document.getElementById('reset').click()
+            break;
+        case 'KeyD':
+            document.getElementById('draw').click()
+            break;
+        case 'KeyE':
+            document.getElementById('erase').click()
+            break;
+        case 'KeyV':
+            document.getElementById('visualize').click()
+            break;
+
+    }
+}
+
+document.addEventListener('keydown', handleKeys);

@@ -32,15 +32,15 @@ document.getElementById('algorithm').addEventListener('click', () => {
     switch (state) {
         case 0:
             document.documentElement.style.setProperty('--generating-algorithm', 'recursiveBacktracking')
-            document.getElementById('algorithm').innerText = 'Recursive Backtracking Algorithm'
+            document.getElementById('algorithm').innerHTML = "<p>Recursive Backtracking <span>Algorithm</span></p>"
             break;
         case 1:
             document.documentElement.style.setProperty('--generating-algorithm', 'kruskals')
-            document.getElementById('algorithm').innerText = "Kruskal's Algorithm"
+            document.getElementById('algorithm').innerHTML = "<p>Kruskal's <span>Algorithm</span></p>"
             break;
         case 2:
             document.documentElement.style.setProperty('--generating-algorithm', 'prims')
-            document.getElementById('algorithm').innerText = "Prim's Algorithm"
+            document.getElementById('algorithm').innerHTML = "<p>Prim's <span>Algorithm</span></p>"
             break;
     }
 })
