@@ -1,3 +1,7 @@
+import { RecursiveBacktrackingAlgorithm } from './RecursiveBacktrackingAlgorithm.js'
+import { PrimsAlgorithm } from './PrimsAlgorithm.js'
+import { KruskalsAlgorithm } from './KruskalsAlgorithm.js'
+
 let grid = document.getElementById('grid')
 let isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'notMobile')
 grid.classList.add(isMobile)

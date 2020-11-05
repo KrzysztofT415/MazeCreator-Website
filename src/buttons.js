@@ -12,11 +12,14 @@ let toggleDrawingMode = (mode) => {
             document.getElementById('erase').classList.add('chosen')
             document.getElementById('draw').classList.remove('chosen')
             document.getElementById('grid').classList.remove('drawing')
+            document.getElementById('mouse').classList.add('erasing')
             break;
         case 'draw':
             document.getElementById('erase').classList.remove('chosen')
             document.getElementById('draw').classList.add('chosen')
             document.getElementById('grid').classList.add('drawing')
+            document.getElementById('mouse').classList.remove('erasing')
+
             break;
     }
 }

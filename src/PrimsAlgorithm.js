@@ -1,11 +1,14 @@
-class PrimsAlgorithm {
+export class PrimsAlgorithm {
     unvisited
     toVisit
     visited
     colors
     removedWalls
+    board
 
     constructor(board) {
+        this.board = board
+        console.log(board)
         this.colors = getCurrentRootColors()
         this.unvisited = shuffleArray(board.getHexes())
         let start = this.unvisited.pop()
@@ -21,7 +24,7 @@ class PrimsAlgorithm {
         this.toVisit = shuffleArray(this.toVisit)
         let newCell = this.toVisit.pop()
 
-        let walls = this.getNeighbours(newCell).filter(v => getElementIfExists(this.visited, v) !== undefined)
+        let walls = this.getNeighbours(newCell).filter(v => this.visited.find(e => e === v) !== undefined)
         walls = shuffleArray(walls).pop()
         let wall = document.getElementById(newCell.getCoordinates().q + '.' + newCell.getCoordinates().r + "|" + walls.getCoordinates().q + '.' + walls.getCoordinates().r)
         if (wall === null) { wall = document.getElementById(walls.getCoordinates().q + '.' + walls.getCoordinates().r + "|" + newCell.getCoordinates().q + '.' + newCell.getCoordinates().r)}
@@ -33,7 +36,7 @@ class PrimsAlgorithm {
         this.unvisited.filter(v => (v.getCoordinates().q !== newCell.getCoordinates().q) || (v.getCoordinates().r !== newCell.getCoordinates().r))
         let neighbours = this.getNeighbours(newCell)
         neighbours.map(v => {
-            if ((getElementIfExists(this.toVisit, v) === undefined) && (getElementIfExists(this.visited, v) === undefined)) {
+            if ((this.toVisit.find(e => e === v) === undefined) && (this.visited.find(e => e === v) === undefined)) {
                 this.toVisit = [...this.toVisit, v]
                 v.getObject.style.fill = this.colors.PL
             }
@@ -43,7 +46,7 @@ class PrimsAlgorithm {
 
     getNeighbours = (cell) => {
         return cell.getDirections
-            .map(direction => { return board.getHex(cell.getCoordinates().q + direction.q, cell.getCoordinates().r + direction.r)[0] })
+            .map(direction => { return this.board.getHex(cell.getCoordinates().q + direction.q, cell.getCoordinates().r + direction.r)[0] })
             .filter(value => value !== undefined)
     }
 

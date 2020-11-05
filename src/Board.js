@@ -33,7 +33,7 @@ class Board {
             current.getEdges.map(edge => {
                 let coords1 = edge.id.split('|')[0].split('.')
                 let coords2 = edge.id.split('|')[1].split('.')
-                if ((board.getHex(coords1[0], coords1[1]).length === 0) || (board.getHex(coords2[0], coords2[1]).length === 0)) {
+                if ((this.getHex(coords1[0], coords1[1]).length === 0) || (this.getHex(coords2[0], coords2[1]).length === 0)) {
                     document.getElementById('walls').removeChild(edge)
                 }
             })
@@ -99,7 +99,7 @@ class Board {
         let walls = []
         this.hexes.map(cell => {
             cell.getEdges.map(edge => {
-                if (getElementIfExists(walls, edge) === undefined) { walls = [...walls, edge] }
+                if (walls.find(e => e === edge) === undefined) { walls = [...walls, edge] }
             })
         })
         return walls

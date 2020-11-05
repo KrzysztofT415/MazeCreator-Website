@@ -14,6 +14,7 @@
       let handleClose = () => {
         let instruction = document.getElementById("instruction")
         document.getElementsByTagName('body')[0].removeChild(instruction)
+        document.getElementById('main').classList.toggle('enabled')
       }
     </script>
     <p>There will be proper tutorial soon</p>
@@ -27,39 +28,39 @@
     <p>* Button Reset deletes all cells</p>
     <p>* Button Visualize makes maze based on current algorithm</p>
     <p>U can press it after generating one maze and changing algorithm to generate new one</p>
+    <p>U can press buttons' highlighted letters corresponding keys to make action</p>
     <button id='close' onclick='handleClose()'>Close</button>
   </div>
-  <div id='toolbar'>
-    <nav id="navbar">
-      <div id="title"><p><span>Maze</span><span>Creator</span></p></div>
-      <div id='burger'>
-        <a draggable='false' href="#" class="toggle-button"></a>
-      </div>
-      <div id="navbar-links">
-        <ul>
-          <li style='width: 0; background: var(--darkD); border-left: var(--primaryD) double 10px'></li>
-          <li><a draggable='false' href='#' id='algorithm'><p>Recursive Backtracking <span>Algorithm</span></p></a></li>
-          <li><a draggable='false' href='#' onclick='handleReset()' id='reset'>Reset</a></li>
-          <li><a draggable='false' href='#' onclick='toggleDrawingMode("draw")' id='draw' class='chosen'>Draw</a></li>
-          <li><a draggable='false' href='#' onclick='toggleDrawingMode("erase")' id='erase'>Erase</a></li>
-          <li><a draggable='false' href='#' id='visualize'>Visualize</a></li>
-          <script src='src/buttons.js'></script>
-        </ul>
-      </div>
-    </nav>
-  </div>
+  <div id='main'>
+    <div id='toolbar'>
+      <nav id="navbar">
+        <div id="title"><p><span>Ma</span><span>ze</span><span>Cr</span><span>ea</span><span>to</span><span>r</span></p></div>
+        <div id='burger'>
+          <a draggable='false' href="#" class="toggle-button"></a>
+        </div>
+        <div id="navbar-links">
+          <ul>
+            <li style='width: 0; background: var(--darkD); border-left: var(--primaryD) double 10px'></li>
+            <li><a draggable='false' href='#' id='algorithm'><p>Recursive Backtracking <span>Algorithm</span></p></a></li>
+            <li><a draggable='false' href='#' onclick='handleReset()' id='reset'>Reset</a></li>
+            <li><a draggable='false' href='#' onclick='toggleDrawingMode("draw")' id='draw' class='chosen'>Draw</a></li>
+            <li><a draggable='false' href='#' onclick='toggleDrawingMode("erase")' id='erase'>Erase</a></li>
+            <li><a draggable='false' href='#' id='visualize'>Visualize</a></li>
+            <script src='src/buttons.js'></script>
+          </ul>
+        </div>
+      </nav>
+    </div>
 
-  <svg id='grid' class='drawing'>
-    <g id='mouse'></g>
-    <g id='cells'></g>
-    <g id='walls'></g>
-  </svg>
+    <svg id='grid' class='drawing'>
+      <g id='mouse'></g>
+      <g id='cells'></g>
+      <g id='walls'></g>
+    </svg>
+  </div>
 </body>
 <script src='src/functions.js'></script>
 <script src='src/Hex.js'></script>
 <script src='src/Board.js'></script>
-<script src='src/RecursiveBacktrackingAlgorithm.js'></script>
-<script src='src/KruskalsAlgorithm.js'></script>
-<script src='src/PrimsAlgorithm.js'></script>
-<script src='src/script.js'></script>
+<script type='module' src='src/script.js'></script>
 </html>

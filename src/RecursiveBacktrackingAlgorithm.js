@@ -1,9 +1,10 @@
-class RecursiveBacktrackingAlgorithm {
+export class RecursiveBacktrackingAlgorithm {
     unvisited
     stack
     currentCell
     colors
     removedWalls
+    board
 
     constructor(board) {
         this.unvisited = shuffleArray(board.getHexes())
@@ -11,10 +12,11 @@ class RecursiveBacktrackingAlgorithm {
         this.currentCell = this.unvisited.pop()
         this.colors = getCurrentRootColors()
         this.removedWalls = []
+        this.board = board
     }
 
     step = () => {
-        this.unvisited = deleteFromArray(this.unvisited, this.currentCell)
+        this.unvisited = this.unvisited.filter(e => e !== this.currentCell)
         this.currentCell.getObject.style.fill = this.colors.PL
 
         if (this.unvisited.length + this.stack.length === 0) {
@@ -46,9 +48,9 @@ class RecursiveBacktrackingAlgorithm {
 
     getNeighbours = () => {
         return this.currentCell.getDirections
-            .map(direction => { return board.getHex(this.currentCell.getCoordinates().q + direction.q, this.currentCell.getCoordinates().r + direction.r)[0] })
+            .map(direction => { return this.board.getHex(this.currentCell.getCoordinates().q + direction.q, this.currentCell.getCoordinates().r + direction.r)[0] })
             .filter(value => value !== undefined)
-            .filter(value => getElementIfExists(this.unvisited, value) !== undefined )
+            .filter(value => this.unvisited.find(e => e === value) !== undefined )
     }
 
     getRemovedWalls = () => { return this.removedWalls }

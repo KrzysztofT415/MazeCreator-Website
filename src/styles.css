@@ -42,6 +42,15 @@ header {
   z-index: 1;
 }
 
+#main {
+  user-select: none;
+  pointer-events: none;
+}
+#main.enabled {
+  user-select: auto;
+  pointer-events: auto;
+}
+
 #instruction {
   position: fixed;
   width: 50%;
@@ -121,10 +130,11 @@ header {
   color: var(--secondaryLE);
   font-weight: bolder;
 }
+
 #title p span {
   display: inline-block;
-  margin-right: 5px;
 }
+
 #title p span:first-letter {
   color: var(--primaryL);
 }
@@ -230,13 +240,19 @@ header {
 }
 
 #mouse {
-  fill: var(--primaryD);
+  fill: var(--whiteD);
   fill-opacity: 30%;
-  stroke: var(--primaryD);
+  stroke: var(--secondaryL);
   stroke-width: 4px;
   stroke-linecap: round;
   stroke-dasharray: 5,8;
   z-index: 1;
+}
+
+#mouse.erasing {
+  fill: var(--primaryD);
+  fill-opacity: 30%;
+  stroke: var(--primaryD);
 }
 
 .empty {

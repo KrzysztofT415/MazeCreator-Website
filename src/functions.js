@@ -1,9 +1,6 @@
-let getRandomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
 let getCurrentRootTransform = () => {
-    return { tx: +getComputedStyle(document.documentElement).getPropertyValue('--current-translateX'),
+    return {
+        tx: +getComputedStyle(document.documentElement).getPropertyValue('--current-translateX'),
         ty: +getComputedStyle(document.documentElement).getPropertyValue('--current-translateY'),
         sc: +getComputedStyle(document.documentElement).getPropertyValue('--current-scale') }
 }
@@ -21,14 +18,18 @@ let getCurrentRootColors = () => {
     WD: getComputedStyle(document.documentElement).getPropertyValue('--whiteD'),
     DL: getComputedStyle(document.documentElement).getPropertyValue('--darkL'),
     DM: getComputedStyle(document.documentElement).getPropertyValue('--darkM'),
-    DD: getComputedStyle(document.documentElement).getPropertyValue('--darkD')
-    }
+    DD: getComputedStyle(document.documentElement).getPropertyValue('--darkD') }
 }
 
 let getTranslatedPosition = (x, y) => {
     let values = getCurrentRootTransform()
     return {x: (x - values.tx) / values.sc, y: (y - values.ty) / values.sc}
 }
+
+let getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 
 let shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; --i) {
@@ -38,12 +39,4 @@ let shuffleArray = (array) => {
         array[j] = temp;
     }
     return array
-}
-
-let deleteFromArray = (array, element) => {
-    return array.filter(v => v !== element)
-}
-
-let getElementIfExists = (array, element) => {
-    return array.filter(v => v === element)[0]
 }
