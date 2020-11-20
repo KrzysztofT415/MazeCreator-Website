@@ -39,15 +39,22 @@
           <a draggable='false' href="#" class="toggle-button"></a>
         </div>
         <div id="navbar-links">
-          <ul>
+          <ul id='buttons-creator' class='active'>
             <li style='width: 0; background: var(--darkD); border-left: var(--primaryD) double 10px'></li>
-            <li><a draggable='false' href='#' id='algorithm'><p>Recursive Backtracking <span>Algorithm</span></p></a></li>
             <li><a draggable='false' href='#' onclick='handleReset()' id='reset'>Reset</a></li>
             <li><a draggable='false' href='#' onclick='toggleDrawingMode("draw")' id='draw' class='chosen'>Draw</a></li>
             <li><a draggable='false' href='#' onclick='toggleDrawingMode("erase")' id='erase'>Erase</a></li>
-            <li><a draggable='false' href='#' id='visualize'>Visualize</a></li>
-            <script src='src/buttons.js'></script>
+            <li><a draggable='false' href='#' onclick='goGenerator()' id='generator'>Generator</a></li>
           </ul>
+          <ul id='buttons-generator'>
+            <li style='width: 0; background: var(--darkD); border-left: var(--primaryD) double 10px'></li>
+            <li><a draggable='false' href='#' onclick='backGenerator()' id='backGenerator'>Return</a></li>
+            <li><a draggable='false' href='#' id='algorithm'><p>Recursive Backtracking <span>Algorithm</span></p></a></li>
+            <li><a draggable='false' href='#' id='visualize'>Visualize</a></li>
+          </ul>
+          <ul>
+          </ul>
+          <script src='src/buttons.js'></script>
         </div>
       </nav>
     </div>

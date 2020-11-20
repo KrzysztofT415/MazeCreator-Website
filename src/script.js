@@ -123,6 +123,29 @@ let handleVisualize = () => {
 
 document.getElementById('visualize').addEventListener('click', () => handleVisualize())
 
+let coloring = false
+
+let coloringMode = e => {
+    let pos = getTranslatedPosition(e.clientX, e.clientY)
+    let hex = board.pixel_to_flat_hex(pos.x, pos.y)
+    let object = document.getElementById(`${hex.q}.${hex.r}`)
+    object.classList.toggle('colored')
+}
+
+let toggleColoring = () => {
+    if (coloring) {
+        grid.style.cursor = 'default';
+        grid.removeEventListener('pointerdown', coloringMode)
+        grid.addEventListener('pointerdown', downListener)
+        coloring = false;
+    } else {
+        grid.style.cursor = 'pointer';
+        grid.addEventListener('pointerdown', coloringMode)
+        grid.removeEventListener('pointerdown', downListener)
+        coloring=true;
+    }
+}
+
 let handleKeys = e => {
     switch (e.code) {
         case 'KeyA':
@@ -139,6 +162,9 @@ let handleKeys = e => {
             break;
         case 'KeyV':
             document.getElementById('visualize').click()
+            break;
+        case 'KeyP':
+            toggleColoring()
             break;
 
     }

@@ -260,3 +260,13 @@ header {
   fill: var(--white);
   opacity: 80%;
 }
+
+.colored {
+  stroke: var(--secondaryL);
+  fill: var(--secondaryL);
+  opacity: 80%;
+}
+
+#navbar-links ul:not(.active) {
+  display: none;
+}

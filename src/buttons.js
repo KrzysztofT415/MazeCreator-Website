@@ -47,3 +47,13 @@ document.getElementById('algorithm').addEventListener('click', () => {
             break;
     }
 })
+
+let goGenerator = () => {
+    document.getElementById('buttons-creator').classList.toggle('active')
+    document.getElementById('buttons-generator').classList.toggle('active')
+}
+
+let backGenerator = () => {
+    document.getElementById('buttons-creator').classList.toggle('active')
+    document.getElementById('buttons-generator').classList.toggle('active')
+}
