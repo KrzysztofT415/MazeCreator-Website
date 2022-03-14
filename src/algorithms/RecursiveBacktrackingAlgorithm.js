@@ -1,4 +1,6 @@
-export class RecursiveBacktrackingAlgorithm {
+import * as functions from '../functions.js'
+import { Algorithm } from './Algorithm.js'
+export class RecursiveBacktrackingAlgorithm extends Algorithm {
     unvisited
     stack
     currentCell
@@ -7,10 +9,11 @@ export class RecursiveBacktrackingAlgorithm {
     board
 
     constructor(board) {
-        this.unvisited = shuffleArray(board.getHexes())
+        super()
+        this.unvisited = functions.shuffleArray(board.cells)
         this.stack = []
         this.currentCell = this.unvisited.pop()
-        this.colors = getCurrentRootColors()
+        this.colors = functions.getCurrentRootColors()
         this.removedWalls = []
         this.board = board
     }
@@ -28,18 +31,18 @@ export class RecursiveBacktrackingAlgorithm {
         let neighbours = this.getNeighbours()
         if (neighbours.length > 0) {
             this.stack = [...this.stack, this.currentCell]
-            let nextCell = shuffleArray(neighbours).pop()
+            let nextCell = functions.shuffleArray(neighbours).pop()
 
-            let wall = document.getElementById(this.currentCell.getCoordinates().q + '.' + this.currentCell.getCoordinates().r + "|" + nextCell.getCoordinates().q + '.' + nextCell.getCoordinates().r)
-            if (wall === null) { wall = document.getElementById(nextCell.getCoordinates().q + '.' + nextCell.getCoordinates().r + "|" + this.currentCell.getCoordinates().q + '.' + this.currentCell.getCoordinates().r)}
+            let wall = document.getElementById(this.currentCell.getCoordinates().q + '.' + this.currentCell.getCoordinates().r + '|' + nextCell.getCoordinates().q + '.' + nextCell.getCoordinates().r)
+            if (wall === null) {
+                wall = document.getElementById(nextCell.getCoordinates().q + '.' + nextCell.getCoordinates().r + '|' + this.currentCell.getCoordinates().q + '.' + this.currentCell.getCoordinates().r)
+            }
             this.removedWalls = [...this.removedWalls, wall]
             document.getElementById('walls').removeChild(wall)
             this.currentCell = nextCell
-
         } else if (this.stack.length > 0) {
             this.currentCell.getObject.style.fill = this.colors.SLE
             this.currentCell = this.stack.pop()
-
         } else if (this.unvisited.length > 0) {
             this.currentCell.getObject.style.fill = this.colors.SLE
             this.currentCell = this.unvisited.pop()
@@ -47,11 +50,16 @@ export class RecursiveBacktrackingAlgorithm {
     }
 
     getNeighbours = () => {
+        console.dir(this.currentCell)
         return this.currentCell.getDirections
-            .map(direction => { return this.board.getHex(this.currentCell.getCoordinates().q + direction.q, this.currentCell.getCoordinates().r + direction.r)[0] })
+            .map(direction => {
+                return this.board.getCell(this.currentCell.getCoordinates().q + direction.q, this.currentCell.getCoordinates().r + direction.r)
+            })
             .filter(value => value !== undefined)
-            .filter(value => this.unvisited.find(e => e === value) !== undefined )
+            .filter(value => this.unvisited.find(e => e === value) !== undefined)
     }
 
-    getRemovedWalls = () => { return this.removedWalls }
+    getRemovedWalls = () => {
+        return this.removedWalls
+    }
 }

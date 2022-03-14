@@ -1,272 +1,271 @@
 :root {
-  --current-translateX: 0;
-  --current-translateY: 0;
-  --current-scale: 1;
+    --current-translateX: 0;
+    --current-translateY: 0;
+    --current-scale: 1;
 
-  --board-type:hex;
-  --generating-algorithm:recursiveBacktracking;
-  --solving-algorithm:astar;
+    --board-type: hex;
+    --generating-algorithm: 'recursiveBacktracking';
+    --solving-algorithm: astar;
 
-  --green: #8bc34a;
-  --red: #f44336;
-  --brown: #5d4037;
+    --green: #8bc34a;
+    --red: #f44336;
+    --brown: #5d4037;
 
-  --secondaryLE: #ffffa4;
-  --secondaryL: #ffff72;
-  --secondaryM: #ffeb3b;
-  --secondaryD: #c8b900;
+    --secondaryLE: #ffffa4;
+    --secondaryL: #ffff72;
+    --secondaryM: #ffeb3b;
+    --secondaryD: #c8b900;
 
-  --primaryL: #ffc947;
-  --primaryM: #ff9800;
-  --primaryD: #c66900;
+    --primaryL: #ffc947;
+    --primaryM: #ff9800;
+    --primaryD: #c66900;
 
-  --white: #eceff1;
-  --whiteD: #babdbe;
-  --darkL: #61656d;
-  --darkM: #373b42;
-  --darkD: #11151b;
+    --white: #eceff1;
+    --whiteD: #babdbe;
+    --darkL: #61656d;
+    --darkM: #373b42;
+    --darkD: #11151b;
 }
 
 ::selection {
-  color: var(--darkD);
-  background: var(--secondaryL);
+    color: var(--darkD);
+    background: var(--secondaryL);
 }
 
 * {
-  padding: 0;
-  margin: 0;
-  font-family: 'Merriweather Sans', serif;
+    padding: 0;
+    margin: 0;
+    font-family: 'Merriweather Sans', serif;
 }
 
 header {
-  z-index: 1;
+    z-index: 1;
 }
 
 #main {
-  user-select: none;
-  pointer-events: none;
+    user-select: none;
+    pointer-events: none;
 }
 #main.enabled {
-  user-select: auto;
-  pointer-events: auto;
+    user-select: auto;
+    pointer-events: auto;
 }
 
 #instruction {
-  position: fixed;
-  width: 50%;
-  height: 50%;
-  background: white;
-  left: 25%;
-  top: 25%;
-  z-index: 10;
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    background: white;
+    left: 25%;
+    top: 25%;
+    z-index: 10;
 }
 
 #burger {
-  position: absolute;
-  right: 1rem;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 46px;
-  cursor: pointer;
-  transition: all .5s ease-in-out;
+    position: absolute;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 46px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
 }
 
 .toggle-button {
-  width: 30px;
-  height: 3px;
-  background: var(--white);
-  border-radius: 5px;
-  box-shadow: 0 2px 5px var(--darkL);
-  transition: all .5s ease-in-out;
+    width: 30px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--darkL);
+    transition: all 0.5s ease-in-out;
 }
 
 .toggle-button::before,
 .toggle-button::after {
-  content: '';
-  position: absolute;
-  width: 30px;
-  height: 3px;
-  background: var(--white);
-  border-radius: 5px;
-  box-shadow: 0 2px 5px var(--darkL);
-  transition: all .5s ease-in-out;
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--darkL);
+    transition: all 0.5s ease-in-out;
 }
 
 .toggle-button::before {
-  transform: translateY(-8px);
+    transform: translateY(-8px);
 }
 .toggle-button::after {
-  transform: translateY(8px);
+    transform: translateY(8px);
 }
 
 #burger.open .toggle-button {
-  transform: translateX(-50px);
-  background: transparent;
-  box-shadow: none;
+    transform: translateX(-50px);
+    background: transparent;
+    box-shadow: none;
 }
 #burger.open .toggle-button::before {
-  transform: rotate(45deg) translate(35px, -35px);
+    transform: rotate(45deg) translate(35px, -35px);
 }
 #burger.open .toggle-button::after {
-  transform: rotate(-45deg) translate(35px, 35px);
+    transform: rotate(-45deg) translate(35px, 35px);
 }
 
 #navbar {
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--darkD);
-  color: var(--white);
-
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--darkD);
+    color: var(--white);
 }
 
 #title {
-  font-size: 1.5rem;
-  margin: .5rem;
-  color: var(--secondaryLE);
-  font-weight: bolder;
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    color: var(--secondaryLE);
+    font-weight: bolder;
 }
 
 #title p span {
-  display: inline-block;
+    display: inline-block;
 }
 
 #title p span:first-letter {
-  color: var(--primaryL);
+    color: var(--primaryL);
 }
 
 #navbar-links {
-  height: 100%;
+    height: 100%;
 }
 
 #navbar-links ul {
-  display: flex;
-  margin: 0;
-  padding: 0;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 #navbar-links li {
-  list-style: none;
+    list-style: none;
 }
 
 #navbar-links li a {
-  display: block;
-  text-decoration: none;
-  color: var(--white);
-  padding: 1rem;
-  font-size: 1.1rem;
+    display: block;
+    text-decoration: none;
+    color: var(--white);
+    padding: 1rem;
+    font-size: 1.1rem;
 }
 
-#navbar-links li a p span{
-  display: inline-block;
+#navbar-links li a p span {
+    display: inline-block;
 }
 
 #navbar-links li a:first-letter,
 #navbar-links li a p span:first-letter {
-  color: var(--primaryL);
+    color: var(--primaryL);
 }
 
 #algorithm p:first-letter {
-  color: inherit;
+    color: inherit;
 }
 
 #navbar-links li:hover {
-  background-color: var(--darkL);
+    background-color: var(--darkL);
 }
 
 #navbar-links li a.chosen {
-  background-color: var(--primaryD);
+    background-color: var(--primaryD);
 }
 
 @media (max-width: 800px) {
-  #navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    #navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-  #burger {
-    display: flex;
-  }
+    #burger {
+        display: flex;
+    }
 
-  #navbar-links {
-    display: none;
-    width: 100%;
-  }
+    #navbar-links {
+        display: none;
+        width: 100%;
+    }
 
-  #navbar-links ul {
-    width: 100%;
-    flex-direction: row;
-  }
+    #navbar-links ul {
+        width: 100%;
+        flex-direction: row;
+    }
 
-  #navbar-links ul li {
-    text-align: center;
-  }
+    #navbar-links ul li {
+        text-align: center;
+    }
 
-  #navbar-links ul li a {
-    padding: .5rem 1rem;
-  }
+    #navbar-links ul li a {
+        padding: 0.5rem 1rem;
+    }
 
-  #navbar-links.active {
-    display: flex;
-  }
+    #navbar-links.active {
+        display: flex;
+    }
 }
 
 #grid {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  bottom: 0;
-  background: linear-gradient(to right, var(--darkL), var(--darkM));
-  z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    background: linear-gradient(to right, var(--darkL), var(--darkM));
+    z-index: -1;
 }
 
 #cells *:hover {
-  opacity: 100%;
+    opacity: 100%;
 }
 
 #walls {
-  stroke: var(--darkD);
-  stroke-width: 3px;
-  stroke-linecap: round;
-  z-index: 3;
+    stroke: var(--darkD);
+    stroke-width: 3px;
+    stroke-linecap: round;
+    z-index: 3;
 }
 
 #cells {
-  z-index: 2;
+    z-index: 2;
 }
 
 #mouse {
-  fill: var(--whiteD);
-  fill-opacity: 30%;
-  stroke: var(--secondaryL);
-  stroke-width: 4px;
-  stroke-linecap: round;
-  stroke-dasharray: 5,8;
-  z-index: 1;
+    fill: var(--whiteD);
+    fill-opacity: 30%;
+    stroke: var(--secondaryL);
+    stroke-width: 4px;
+    stroke-linecap: round;
+    stroke-dasharray: 5, 8;
+    z-index: 1;
 }
 
 #mouse.erasing {
-  fill: var(--primaryD);
-  fill-opacity: 30%;
-  stroke: var(--primaryD);
+    fill: var(--primaryD);
+    fill-opacity: 30%;
+    stroke: var(--primaryD);
 }
 
 .empty {
-  stroke: var(--white);
-  fill: var(--white);
-  opacity: 80%;
+    stroke: var(--white);
+    fill: var(--white);
+    opacity: 80%;
 }
 
 .colored {
-  stroke: var(--secondaryL);
-  fill: var(--secondaryL);
-  opacity: 80%;
+    stroke: var(--secondaryL);
+    fill: var(--secondaryL);
+    opacity: 80%;
 }
 
 #navbar-links ul:not(.active) {
-  display: none;
+    display: none;
 }

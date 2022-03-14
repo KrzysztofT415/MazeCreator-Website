@@ -1,25 +1,31 @@
-export class KruskalsAlgorithm {
+import * as functions from '../functions.js'
+import { Algorithm } from './Algorithm.js'
+export class KruskalsAlgorithm extends Algorithm {
     sets
     walls
     colors
     removedWalls
 
     constructor(board) {
-        this.walls = shuffleArray(board.getWalls()).map(wall => {
-            let coords1 = wall.id.split('|')[0].split('.')
-            let coords2 = wall.id.split('|')[1].split('.')
-            let hex1 = document.getElementById(coords1[0] + '.' + coords1[1])
-            let hex2 = document.getElementById(coords2[0] + '.' + coords2[1])
-            if (hex1 === null || hex2 === null) {
-                return undefined
-            }
-            return {wall: wall, h1: hex1, h2: hex2}
-        }).filter(v => v !== undefined)
-        this.sets = board.getHexes()
+        super()
+        this.walls = functions
+            .shuffleArray(board.getWalls())
+            .map(wall => {
+                let coords1 = wall.id.split('|')[0].split('.')
+                let coords2 = wall.id.split('|')[1].split('.')
+                let hex1 = document.getElementById(coords1[0] + '.' + coords1[1])
+                let hex2 = document.getElementById(coords2[0] + '.' + coords2[1])
+                if (hex1 === null || hex2 === null) {
+                    return undefined
+                }
+                return { wall: wall, h1: hex1, h2: hex2 }
+            })
+            .filter(v => v !== undefined)
+        this.sets = board.cells
         for (let i = 0; i < this.sets.length; i++) {
-            this.sets[i] = {set: i, cells: [this.sets[i]]}
+            this.sets[i] = { set: i, cells: [this.sets[i]] }
         }
-        this.colors = getCurrentRootColors()
+        this.colors = functions.getCurrentRootColors()
         this.removedWalls = []
     }
 
@@ -43,7 +49,7 @@ export class KruskalsAlgorithm {
             if (set1 !== set2) {
                 wall.h1.style.fill = this.colors.SLE
                 wall.h2.style.fill = this.colors.SLE
-                set2.cells.map(v => set1.cells = [...set1.cells, v])
+                set2.cells.map(v => (set1.cells = [...set1.cells, v]))
                 this.sets = this.sets.filter(e => e !== set2)
                 this.removedWalls = [...this.removedWalls, wall.wall]
                 document.getElementById('walls').removeChild(wall.wall)
