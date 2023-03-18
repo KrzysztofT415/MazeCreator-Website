@@ -1,15 +1,11 @@
-import * as functions from './functions.js'
-import { Board } from './model/Board.js'
-import { RecursiveBacktrackingAlgorithm } from './algorithms/RecursiveBacktrackingAlgorithm.js'
-import { PrimsAlgorithm } from './algorithms/PrimsAlgorithm.js'
-import { KruskalsAlgorithm } from './algorithms/KruskalsAlgorithm.js'
-import { Algorithm } from './algorithms/Algorithm.js'
-import { WindowManager } from './components/WindowManager.js'
+import { RecursiveBacktrackingAlgorithm } from './RecursiveBacktrackingAlgorithm.js'
+import { PrimsAlgorithm } from './PrimsAlgorithm.js'
+import { KruskalsAlgorithm } from './KruskalsAlgorithm.js'
 
 let grid = document.getElementById('grid')
-let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'notMobile'
+let isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'notMobile')
 grid.classList.add(isMobile)
-isMobile = isMobile === 'mobile'
+isMobile = (isMobile === 'mobile')
 const board = new Board()
 
 let downListener = e => {
@@ -29,22 +25,19 @@ let downListener = e => {
 }
 
 let moveGrid = e => {
-    let [sc, tx, ty] = functions.getCurrentRootTransform()
-    tx += e.movementX
-    ty += e.movementY
-    document.documentElement.style.setProperty('--current-translateX', tx)
-    document.documentElement.style.setProperty('--current-translateY', ty)
-    document.getElementById('cells').style.transform = `translate(${+tx}px, ${+ty}px) scale(${sc})`
-    document.getElementById('walls').style.transform = `translate(${+tx}px, ${+ty}px) scale(${sc})`
+    let values = getCurrentRootTransform()
+    values.tx += e.movementX
+    values.ty += e.movementY
+    document.documentElement.style.setProperty('--current-translateX', values.tx)
+    document.documentElement.style.setProperty('--current-translateY', values.ty)
+    document.getElementById('cells').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
+    document.getElementById('walls').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
 }
 
 let draw = e => {
-    let [x, y] = functions.getTranslatedPosition(e.clientX, e.clientY)
-    if (grid.classList.contains('drawing')) {
-        board.addCellOnPoint(x, y)
-    } else {
-        board.removeCellOnPoint(x, y)
-    }
+    let pos = getTranslatedPosition(e.clientX, e.clientY)
+    if (grid.classList.contains('drawing')) { board.addHexOnPoint(pos.x, pos.y) }
+    else { board.removeHexOnPoint(pos.x, pos.y) }
 }
 let drawUp = () => {
     grid.addEventListener('pointerdown', downListener)
@@ -60,61 +53,72 @@ let moveUp = () => {
 grid.addEventListener('pointerdown', downListener)
 
 let pointer = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
-pointer.setAttribute('points', '0 30, 10 10, 30 0, 10 -10, 0 -30, -10 -10, -30 0, -10 10')
+pointer.setAttribute('points', '50,0 25.000000000000007,43.30127018922193 -24.99999999999999,43.30127018922194 -50,6.123233995736766e-15 -25.00000000000002,-43.301270189221924 25.000000000000007,-43.30127018922193')
 pointer.id = 'pointer'
 document.getElementById('mouse').appendChild(pointer)
 
 let highlight = e => {
-    let position = functions.getTranslatedPosition(e.clientX, e.clientY)
-    let coords = board.geometry.getCellFromPixels(...position)
-    let [dx, dy] = board.geometry.centerOf(...coords)
-    let [tx, ty, sc] = functions.getCurrentRootTransform()
-    document.getElementById('pointer').setAttribute('transform', `translate(${dx * sc + tx} ${dy * sc + ty}) scale(${sc})`)
+    let pos = getTranslatedPosition(e.clientX, e.clientY)
+    pos = board.pixel_to_flat_hex(pos.x, pos.y)
+    let values = getCurrentRootTransform()
+    pos.r = (pos.r + pos.q / 2.0) * board.getSize * Math.sqrt(3) * values.sc
+    pos.q = pos.q * board.getSize * 1.5 * values.sc
+    document.getElementById('pointer').setAttribute('transform', `translate(${pos.q + values.tx} ${pos.r + values.ty}) scale(${values.sc})`)
 }
 
 grid.addEventListener('pointermove', highlight)
 grid.addEventListener('wheel', highlight)
 
 let handleWheel = e => {
-    let [sc, tx, ty] = functions.getCurrentRootTransform()
-    sc = +sc + e.deltaY * -0.0004
-    document.documentElement.style.setProperty('--current-scale', sc)
-    document.getElementById('cells').style.transform = `translate(${+tx}px, ${+ty}px) scale(${sc})`
-    document.getElementById('walls').style.transform = `translate(${+tx}px, ${+ty}px) scale(${sc})`
+    let values = getCurrentRootTransform()
+    values.sc = Math.min(Math.max(.2, +values.sc + e.deltaY * -0.0004), 1);
+    document.documentElement.style.setProperty('--current-scale', values.sc)
+    document.getElementById('cells').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
+    document.getElementById('walls').style.transform = `translate(${+values.tx}px, ${+values.ty}px) scale(${values.sc})`
 }
 
 grid.addEventListener('wheel', handleWheel)
+let init = 0
 let algorithm
 let handleVisualize = () => {
+
     let cells = document.getElementById('cells').children
     for (let i = 0; i < cells.length; i++) {
-        cells[i].style.fill = functions.getCurrentRootColors().DD
+        cells[i].style.fill = getCurrentRootColors().DD
     }
-    if (algorithm) {
-        algorithm.stop = true
-        // let walls = algorithm.getRemovedWalls()
-        // for (let i = 0; i < walls.length; i++) {
-        //     document.getElementById('walls').appendChild(walls[i])
-        // }
-        algorithm = null
+    if (algorithm !== undefined) {
+        let walls = algorithm.getRemovedWalls()
+        for (let i = 0; i < walls.length; i++) {
+            document.getElementById('walls').appendChild(walls[i])
+        }
     }
 
-    switch (getComputedStyle(document.documentElement).getPropertyValue('--generating-algorithm')) {
-        case 'recursiveBacktracking':
-            algorithm = new RecursiveBacktrackingAlgorithm(board)
-            break
-        case 'kruskals':
-            algorithm = new KruskalsAlgorithm(board)
-            break
-        case 'prims':
-            algorithm = new PrimsAlgorithm(board)
-            break
-        default:
-            console.log('error')
-            algorithm = new RecursiveBacktrackingAlgorithm(board)
+    if (!init) {
+        algorithm = getComputedStyle(document.documentElement).getPropertyValue('--generating-algorithm')
+        switch (algorithm) {
+            case 'recursiveBacktracking':
+                algorithm = new RecursiveBacktrackingAlgorithm(board)
+                break;
+            case 'kruskals':
+                algorithm = new KruskalsAlgorithm(board)
+                break;
+            case 'prims':
+                algorithm = new PrimsAlgorithm(board)
+                break;
+        }
+        init = 1
     }
 
-    algorithm.start()
+    let animation = () => {
+        let end = algorithm.step()
+        if (!end) {
+            setTimeout(() => requestAnimationFrame(animation), 30)
+        } else {
+            init = 0;
+        }
+    }
+
+    requestAnimationFrame(animation)
 }
 
 document.getElementById('visualize').addEventListener('click', () => handleVisualize())
@@ -122,23 +126,23 @@ document.getElementById('visualize').addEventListener('click', () => handleVisua
 let coloring = false
 
 let coloringMode = e => {
-    let [x, y] = functions.getTranslatedPosition(e.clientX, e.clientY)
-    let hex = board.pixel_to_flat_hex(x, y)
+    let pos = getTranslatedPosition(e.clientX, e.clientY)
+    let hex = board.pixel_to_flat_hex(pos.x, pos.y)
     let object = document.getElementById(`${hex.q}.${hex.r}`)
     object.classList.toggle('colored')
 }
 
 let toggleColoring = () => {
     if (coloring) {
-        grid.style.cursor = 'default'
+        grid.style.cursor = 'default';
         grid.removeEventListener('pointerdown', coloringMode)
         grid.addEventListener('pointerdown', downListener)
-        coloring = false
+        coloring = false;
     } else {
-        grid.style.cursor = 'pointer'
+        grid.style.cursor = 'pointer';
         grid.addEventListener('pointerdown', coloringMode)
         grid.removeEventListener('pointerdown', downListener)
-        coloring = true
+        coloring=true;
     }
 }
 
@@ -146,27 +150,24 @@ let handleKeys = e => {
     switch (e.code) {
         case 'KeyA':
             document.getElementById('algorithm').click()
-            break
+            break;
         case 'KeyR':
             document.getElementById('reset').click()
-            break
+            break;
         case 'KeyD':
             document.getElementById('draw').click()
-            break
+            break;
         case 'KeyE':
             document.getElementById('erase').click()
-            break
+            break;
         case 'KeyV':
             document.getElementById('visualize').click()
-            break
+            break;
         case 'KeyP':
             toggleColoring()
-            break
+            break;
+
     }
 }
 
-document.addEventListener('keydown', handleKeys)
-
-window.onerror = function (message, source, lineno, colno, error) {
-    document.getElementById('info').innerHTML = message
-}
+document.addEventListener('keydown', handleKeys);
